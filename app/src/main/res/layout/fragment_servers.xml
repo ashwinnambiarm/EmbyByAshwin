@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.Login.FragmentServers">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Server"
+            android:textColor="#fff"
+            android:textSize="34sp"
+            android:textAlignment="center"
+            android:id="@+id/txt_serverSelect"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recyclerViewServerSelect"
+            android:layout_below="@+id/txt_serverSelect"
+            android:layout_marginTop="20dp"/>
+
+    </RelativeLayout>
+</FrameLayout>

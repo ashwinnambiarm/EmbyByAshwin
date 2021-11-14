@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.Login.FragmentAddServer">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#000">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Connect to Server"
+            android:textColor="#fff"
+            android:textSize="34sp"
+            android:textAlignment="center"
+            android:id="@+id/lbl_add_server"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Host:"
+            android:layout_below="@+id/lbl_add_server"
+            android:textColor="#fff"
+            android:id="@+id/lbl_add_server_address"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_add_server_address"
+            android:textColor="#fff"
+            android:text="localhost"
+            android:layout_below="@+id/lbl_add_server_address"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Port:"
+            android:textColor="#fff"
+            android:id="@+id/lbl_add_server_port"
+            android:layout_below="@+id/txt_add_server_address"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_add_server_port"
+            android:text="8096"
+            android:textColor="#fff"
+            android:layout_below="@+id/lbl_add_server_port"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Connect"
+            android:id="@+id/btn_add_server_connect"
+            android:layout_below="@+id/txt_add_server_port"/>
+
+    </RelativeLayout>
+
+</FrameLayout>

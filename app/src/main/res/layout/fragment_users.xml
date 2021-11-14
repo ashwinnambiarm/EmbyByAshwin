@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.Login.FragmentUsers">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please Sign In"
+            android:textColor="#fff"
+            android:textSize="34sp"
+            android:textAlignment="center"
+            android:id="@+id/lbl_userSelect"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recyclerViewUserSelect"
+            android:layout_below="@+id/lbl_userSelect"
+            android:layout_marginTop="20dp"/>
+
+    </RelativeLayout>
+
+</FrameLayout>

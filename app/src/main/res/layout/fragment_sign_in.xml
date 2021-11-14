@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.Login.FragmentSignIn">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#000">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please Sign In"
+            android:textColor="#fff"
+            android:textSize="34sp"
+            android:textAlignment="center"
+            android:id="@+id/lbl_signin"/>
+
+        <TextView
+            android:id="@+id/lbl_signin_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:text="User Name"
+            android:layout_below="@+id/lbl_signin"/>
+
+        <EditText
+            android:id="@+id/txt_signin_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lbl_signin_username"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text=""
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/lbl_signin_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:text="Password"
+            android:layout_below="@+id/txt_signin_username"/>
+
+        <EditText
+            android:id="@+id/txt_signin_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textColor="#fff"
+            android:inputType="textPassword"
+            android:text=""
+            android:layout_below="@+id/lbl_signin_password"/>
+
+        <Button
+            android:id="@+id/btn_signin_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:layout_below="@+id/txt_signin_password"/>
+
+        <Button
+            android:id="@+id/btn_signin_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:layout_below="@+id/btn_signin_login"/>
+
+        <Button
+            android:id="@+id/btn_signin_change_server"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Change Server"
+            android:layout_below="@+id/btn_signin_cancel"/>
+
+    </RelativeLayout>
+</FrameLayout>
