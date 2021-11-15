@@ -11,14 +11,24 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ashwin.embybyashwin.Fragment.Home.FragmentMyMedia;
+import com.ashwin.embybyashwin.Fragment.Home.Model.MyMedia;
+import com.ashwin.embybyashwin.Fragment.Login.Model.User;
 import com.ashwin.embybyashwin.emby.EmbyConnection;
+
+import java.util.ArrayList;
 
 import mediabrowser.apiinteraction.ApiClient;
 import mediabrowser.apiinteraction.ConnectionResult;
 import mediabrowser.apiinteraction.EmptyResponse;
 import mediabrowser.apiinteraction.Response;
 import mediabrowser.apiinteraction.android.AndroidApiClient;
+import mediabrowser.model.drawing.ImageFormat;
+import mediabrowser.model.dto.BaseItemDto;
+import mediabrowser.model.dto.ImageOptions;
+import mediabrowser.model.dto.UserDto;
+import mediabrowser.model.entities.ImageType;
 import mediabrowser.model.logging.NullLogger;
+import mediabrowser.model.querying.ItemsResult;
 
 public class ActivityMain extends AppCompatActivity {
 
@@ -66,7 +76,32 @@ public class ActivityMain extends AppCompatActivity {
                         embyConnection.setApiClient((AndroidApiClient) response.getApiClient());
 
                         FragmentMyMedia fragmentMyMedia = new FragmentMyMedia();
-                        loadFragment(fragmentMyMedia, R.id.fl_home_section_1);
+
+                        ArrayList<MyMedia> myMediaList = new ArrayList<MyMedia>();
+
+                        embyConnection.getApiClient().GetUserViews(embyConnection.getApiClient().getCurrentUserId(), new Response<ItemsResult>(){
+                            @Override
+                            public void onResponse(ItemsResult response) {
+                                ImageOptions options = new ImageOptions();
+                                options.setImageType(ImageType.Primary);
+                                options.setFormat(ImageFormat.Png);
+                                options.setMaxHeight(107);
+
+                                for (BaseItemDto item: response.getItems()) {
+                                    Log.e(TAG, "Library  ->" + item.getName()
+                                            + " Library image url ->" + embyConnection.getApiClient().GetImageUrl(item,options));
+                                    MyMedia myMedia = new MyMedia();
+                                    myMedia.setMediaName(item.getName());
+                                    myMedia.setThumbanilUrl(embyConnection.getApiClient().GetImageUrl(item,options));
+
+                                    myMediaList.add(myMedia);
+                                }
+
+                                fragmentMyMedia.setMyMediaList(myMediaList);
+                                fragmentMyMedia.setImageLoader(embyConnection.getApiClient().getImageLoader());
+                                loadFragment(fragmentMyMedia, R.id.fl_home_section_1);
+                            }
+                        });
 
                         break;
                 }

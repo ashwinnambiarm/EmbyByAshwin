@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.ashwin.embybyashwin.Fragment.Home.Adapter.MyMediaAdapter;
 import com.ashwin.embybyashwin.Fragment.Home.Model.MyMedia;
 import com.ashwin.embybyashwin.Fragment.Login.Model.Server;
@@ -20,7 +21,8 @@ import com.ashwin.embybyashwin.R;
 import java.util.ArrayList;
 
 public class FragmentMyMedia extends Fragment {
-    ArrayList<MyMedia> myMedias;
+    ArrayList<MyMedia> myMediaList;
+    private ImageLoader imageLoader;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,22 +38,21 @@ public class FragmentMyMedia extends Fragment {
 
         RecyclerView rvMyMedia = (RecyclerView) v.findViewById(R.id.rv_my_media);
 
-        if (myMedias == null){
-            myMedias = new ArrayList<MyMedia>();
+        if (myMediaList == null){
+            myMediaList = new ArrayList<MyMedia>();
         }
-        MyMedia myMedia = new MyMedia();
 
-        myMedias.add(myMedia);
-        myMedias.add(myMedia);
-        myMedias.add(myMedia);
-        myMedias.add(myMedia);
-        myMedias.add(myMedia);
 
-        MyMediaAdapter adapter = new MyMediaAdapter(myMedias);
-
+        MyMediaAdapter adapter = new MyMediaAdapter(myMediaList);
+        adapter.setImageLoader(imageLoader);
         rvMyMedia.setAdapter(adapter);
         rvMyMedia.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false));
 
         return v;
     }
+
+    public void setMyMediaList (ArrayList<MyMedia> mediaList){
+        myMediaList = mediaList;
+    }
+    public void setImageLoader(ImageLoader imageloader){ imageLoader = imageloader;}
 }

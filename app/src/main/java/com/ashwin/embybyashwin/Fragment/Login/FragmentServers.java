@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.ashwin.embybyashwin.Fragment.Login.Adapter.ServerAdapter;
 import com.ashwin.embybyashwin.Fragment.Login.Model.Server;
 import com.ashwin.embybyashwin.R;
@@ -20,6 +21,7 @@ public class FragmentServers extends Fragment {
 
     ArrayList<Server> server;
     private FragmentServers.FragmentServersListener listener;
+    private ImageLoader imageLoader;
 
     public interface FragmentServersListener{
         void OnClickFragmentServers(String serverName, String serverAddress);
