@@ -14,6 +14,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.ashwin.embybyashwin.Fragment.Home.Model.MyMedia;
 import com.ashwin.embybyashwin.Fragment.Login.Adapter.ServerAdapter;
 import com.ashwin.embybyashwin.R;
+import com.ashwin.embybyashwin.emby.GlobalClass;
 
 import java.util.ArrayList;
 
@@ -47,17 +48,8 @@ public class MyMediaAdapter extends RecyclerView.Adapter<MyMediaAdapter.ViewHold
         ImageView imgPrimary = holder.imgPrimary;
 
         txtMediaName.setText(myMedia.getMediaName());
-        imageLoader.get(myMedia.getThumbanilUrl(), new ImageLoader.ImageListener() {
-            @Override
-            public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                imgPrimary.setImageBitmap(imageContainer.getBitmap());
-            }
 
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-            }
-        });
+        GlobalClass.getInstance().LoadImagetoView(myMedia.getThumbanilUrl(), imgPrimary);
 
     }
 
@@ -65,8 +57,6 @@ public class MyMediaAdapter extends RecyclerView.Adapter<MyMediaAdapter.ViewHold
     public int getItemCount() {
         return mediaList.size();
     }
-
-    public void setImageLoader(ImageLoader imageloader){ imageLoader = imageloader;}
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private final TextView txtMediaName;

@@ -14,6 +14,7 @@ import com.ashwin.embybyashwin.Fragment.Home.FragmentMyMedia;
 import com.ashwin.embybyashwin.Fragment.Home.Model.MyMedia;
 import com.ashwin.embybyashwin.Fragment.Login.Model.User;
 import com.ashwin.embybyashwin.emby.EmbyConnection;
+import com.ashwin.embybyashwin.emby.GlobalClass;
 
 import java.util.ArrayList;
 
@@ -36,7 +37,7 @@ public class ActivityMain extends AppCompatActivity {
     private String TAG = "ActivityMain";
     private NullLogger logger;
     private EmbyConnection embyConnection;
-    private ApiClient apiClient;
+    private AndroidApiClient apiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,66 +46,33 @@ public class ActivityMain extends AppCompatActivity {
 
         Button btnLogout = findViewById(R.id.btn_Logout);
 
-        embyConnection = new EmbyConnection(getApplicationContext());
+        apiClient = GlobalClass.getInstance().getApiClient();
 
-        embyConnection.getConnection().Connect(new Response<ConnectionResult>(){
+        FragmentMyMedia fragmentMyMedia = new FragmentMyMedia();
+
+        ArrayList<MyMedia> myMediaList = new ArrayList<MyMedia>();
+
+        apiClient.GetUserViews(apiClient.getCurrentUserId(), new Response<ItemsResult>(){
             @Override
-            public void onResponse(ConnectionResult response) {
+            public void onResponse(ItemsResult response) {
+                ImageOptions options = new ImageOptions();
+                options.setImageType(ImageType.Primary);
+                options.setFormat(ImageFormat.Png);
+                options.setMaxHeight(107);
 
-                Log.e(TAG, "ConnectionState " + response.getState());
+                for (BaseItemDto item: response.getItems()) {
+                    Log.e(TAG, "Library  ->" + item.getName()
+                            + " Library image url ->" + apiClient.GetImageUrl(item,options));
+                    MyMedia myMedia = new MyMedia();
+                    myMedia.setMediaName(item.getName());
+                    myMedia.setThumbanilUrl(apiClient.GetImageUrl(item,options));
 
-                switch (response.getState())
-                {
-                    case ConnectSignIn:
-                        // Connect sign in screen should be presented
-                        // Authenticate using LoginToConnect, then call Connect again to start over
-                        break;
-                    case ServerSignIn:
-                        // A server was found and the user needs to login.
-                        // Display a login screen and authenticate with the server using result.ApiClient
-                        embyConnection.setApiClient((AndroidApiClient) response.getApiClient());
-
-                        break;
-                    case ServerSelection:
-                        // Multiple servers available
-                        // Display a selection screen by calling GetAvailableServers
-                        // When a server is chosen, call the Connect overload that accept either a ServerInfo object or a String url.
-                        break;
-                    case SignedIn:
-                        // A server was found and the user has been signed in using previously saved credentials.
-                        // Ready to browse using result.ApiClient
-                        embyConnection.setApiClient((AndroidApiClient) response.getApiClient());
-
-                        FragmentMyMedia fragmentMyMedia = new FragmentMyMedia();
-
-                        ArrayList<MyMedia> myMediaList = new ArrayList<MyMedia>();
-
-                        embyConnection.getApiClient().GetUserViews(embyConnection.getApiClient().getCurrentUserId(), new Response<ItemsResult>(){
-                            @Override
-                            public void onResponse(ItemsResult response) {
-                                ImageOptions options = new ImageOptions();
-                                options.setImageType(ImageType.Primary);
-                                options.setFormat(ImageFormat.Png);
-                                options.setMaxHeight(107);
-
-                                for (BaseItemDto item: response.getItems()) {
-                                    Log.e(TAG, "Library  ->" + item.getName()
-                                            + " Library image url ->" + embyConnection.getApiClient().GetImageUrl(item,options));
-                                    MyMedia myMedia = new MyMedia();
-                                    myMedia.setMediaName(item.getName());
-                                    myMedia.setThumbanilUrl(embyConnection.getApiClient().GetImageUrl(item,options));
-
-                                    myMediaList.add(myMedia);
-                                }
-
-                                fragmentMyMedia.setMyMediaList(myMediaList);
-                                fragmentMyMedia.setImageLoader(embyConnection.getApiClient().getImageLoader());
-                                loadFragment(fragmentMyMedia, R.id.fl_home_section_1);
-                            }
-                        });
-
-                        break;
+                    myMediaList.add(myMedia);
                 }
+
+                fragmentMyMedia.setMyMediaList(myMediaList);
+
+                loadFragment(fragmentMyMedia, R.id.fl_home_section_1);
             }
         });
 
@@ -131,13 +99,13 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void userLogout(){
-        embyConnection.getApiClient().Logout(new EmptyResponse());
+        apiClient.Logout(new EmptyResponse());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        embyConnection = null;
+        apiClient = null;
     }
 
 

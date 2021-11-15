@@ -17,6 +17,7 @@ import com.ashwin.embybyashwin.Fragment.Login.FragmentUsers;
 import com.ashwin.embybyashwin.Fragment.Login.Model.Server;
 import com.ashwin.embybyashwin.Fragment.Login.Model.User;
 import com.ashwin.embybyashwin.emby.EmbyConnection;
+import com.ashwin.embybyashwin.emby.GlobalClass;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -49,6 +50,8 @@ public class ActivityLogin extends AppCompatActivity implements FragmentSignIn.F
 
         Intent intent = getIntent();
 
+
+
         embyConnection = new EmbyConnection(getApplicationContext());
 
         embyConnection.getConnection().Connect(new Response<ConnectionResult>() {
@@ -72,6 +75,8 @@ public class ActivityLogin extends AppCompatActivity implements FragmentSignIn.F
                         // A server was found and the user needs to login.
                         // Display a login screen and authenticate with the server using result.ApiClient
                         embyConnection.setApiClient((AndroidApiClient) result.getApiClient());
+
+                        GlobalClass.getInstance().setApiClient((AndroidApiClient) result.getApiClient());
 
                         ArrayList<User> users = new ArrayList<User>();
 
@@ -102,6 +107,9 @@ public class ActivityLogin extends AppCompatActivity implements FragmentSignIn.F
                     case SignedIn:
                         // A server was found and the user has been signed in using previously saved credentials.
                         // Ready to browse using result.ApiClient
+
+                        GlobalClass.getInstance().setApiClient((AndroidApiClient) result.getApiClient());
+
                         ShowMainActivity();
                         break;
                 }

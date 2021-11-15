@@ -44,7 +44,7 @@ public class FragmentMyMedia extends Fragment {
 
 
         MyMediaAdapter adapter = new MyMediaAdapter(myMediaList);
-        adapter.setImageLoader(imageLoader);
+
         rvMyMedia.setAdapter(adapter);
         rvMyMedia.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false));
 
@@ -54,5 +54,4 @@ public class FragmentMyMedia extends Fragment {
     public void setMyMediaList (ArrayList<MyMedia> mediaList){
         myMediaList = mediaList;
     }
-    public void setImageLoader(ImageLoader imageloader){ imageLoader = imageloader;}
 }
