@@ -15,35 +15,34 @@ import com.ashwin.embybyashwin.emby.GlobalClass;
 
 import java.util.ArrayList;
 
-public class MyMediaAdapter extends RecyclerView.Adapter<MyMediaAdapter.ViewHolder> {
-
+public class LatestAdapter extends RecyclerView.Adapter<LatestAdapter.ViewHolder>{
     ArrayList<MyMedia> mediaList;
 
-    public MyMediaAdapter(ArrayList<MyMedia> medialist){
+    public LatestAdapter(ArrayList<MyMedia> medialist){
         mediaList = medialist;
     }
 
 
     @Override
-    public ViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View view = inflater.inflate(R.layout.list_library_item, parent, false);
+        View view = inflater.inflate(R.layout.list_media_item, parent, false);
 
-        MyMediaAdapter.ViewHolder viewHolder = new MyMediaAdapter.ViewHolder(view);
+        LatestAdapter.ViewHolder viewHolder = new LatestAdapter.ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(LatestAdapter.ViewHolder holder, int position) {
 
         MyMedia myMedia = mediaList.get(position);
 
-        TextView txtMediaName = holder.txtMediaName;
+//            TextView txtMediaName = holder.txtMediaName;
         ImageView imgPrimary = holder.imgPrimary;
 
-        txtMediaName.setText(myMedia.getMediaName());
+//            txtMediaName.setText(myMedia.getMediaName());
 
         GlobalClass.getInstance().LoadImagetoView(myMedia.getThumbanilUrl(), imgPrimary);
 
@@ -55,13 +54,13 @@ public class MyMediaAdapter extends RecyclerView.Adapter<MyMediaAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private final TextView txtMediaName;
+//        private final TextView txtMediaName;
         private final ImageView imgPrimary;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            txtMediaName = (TextView) itemView.findViewById(R.id.lbl_my_media_name);
-            imgPrimary = (ImageView) itemView.findViewById(R.id.img_my_media_primary);
+//            txtMediaName = (TextView) itemView.findViewById(R.id.lbl_my_media_name);
+            imgPrimary = (ImageView) itemView.findViewById(R.id.img_media_item);
         }
     }
 }

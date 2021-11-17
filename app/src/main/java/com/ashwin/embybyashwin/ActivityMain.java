@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.ashwin.embybyashwin.Fragment.Home.FragmentLatest;
 import com.ashwin.embybyashwin.Fragment.Home.FragmentMyMedia;
 import com.ashwin.embybyashwin.Fragment.Home.Model.MyMedia;
 import com.ashwin.embybyashwin.Fragment.Login.Model.User;
@@ -30,6 +31,7 @@ import mediabrowser.model.dto.UserDto;
 import mediabrowser.model.entities.ImageType;
 import mediabrowser.model.logging.NullLogger;
 import mediabrowser.model.querying.ItemsResult;
+import mediabrowser.model.querying.LatestItemsQuery;
 
 public class ActivityMain extends AppCompatActivity {
 
@@ -48,6 +50,19 @@ public class ActivityMain extends AppCompatActivity {
 
         apiClient = GlobalClass.getInstance().getApiClient();
 
+        LoadMyMedia();
+        LoadLatest();
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userLogout();
+            }
+        });
+
+    }
+
+    private void LoadMyMedia(){
         FragmentMyMedia fragmentMyMedia = new FragmentMyMedia();
 
         ArrayList<MyMedia> myMediaList = new ArrayList<MyMedia>();
@@ -75,14 +90,44 @@ public class ActivityMain extends AppCompatActivity {
                 loadFragment(fragmentMyMedia, R.id.fl_home_section_1);
             }
         });
+    }
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
+    private void LoadLatest(){
+        // TODO: Added Latest Items
+
+        FragmentLatest fragmentLatest = new FragmentLatest();
+
+        ArrayList<MyMedia> myLatestTvList = new ArrayList<MyMedia>();
+
+        LatestItemsQuery query = new LatestItemsQuery();
+        query.setUserId(apiClient.getCurrentUserId());
+        query.setGroupItems(true);
+        Log.e(TAG, "LoadLatest loading ");
+        apiClient.GetLatestItems(query,new Response<BaseItemDto[]>(){
             @Override
-            public void onClick(View v) {
-                userLogout();
+            public void onResponse(BaseItemDto[] response) {
+                ImageOptions options = new ImageOptions();
+                options.setImageType(ImageType.Primary);
+                options.setFormat(ImageFormat.Png);
+                options.setMaxHeight(172);
+
+                for (BaseItemDto item: response) {
+                    Log.e(TAG, "Library  ->" + item.getName());
+                    MyMedia myMedia = new MyMedia();
+                    myMedia.setMediaName(item.getName());
+                    myMedia.setThumbanilUrl(apiClient.GetImageUrl(item,options));
+                    myLatestTvList.add(myMedia);
+                }
+                fragmentLatest.setTvShowList(myLatestTvList);
+
+                loadFragment(fragmentLatest, R.id.fl_home_section_2);
+            }
+
+            @Override
+            public void onError(Exception exception) {
+                Log.e(TAG, "LoadLatest failed " + exception.getLocalizedMessage());
             }
         });
-
     }
 
     private void loadFragment(Fragment fragment, Integer layoutID){

@@ -42,11 +42,11 @@ public class EmbyConnection  {
         IJsonSerializer jsonSerializer = new GsonJsonSerializer();
 
         // Android developer should use AndroidCredentialProvider
-        ICredentialProvider credentialProvider = new AndroidCredentialProvider(jsonSerializer, context,logger);
+//        ICredentialProvider credentialProvider = new AndroidCredentialProvider(jsonSerializer, context,logger);
 
-        INetworkConnection networkConnection = new AndroidNetworkConnection(context,logger);
+//        INetworkConnection networkConnection = new AndroidNetworkConnection(context,logger);
 
-        IServerLocator serverLocator = new ServerLocator(logger, jsonSerializer);
+//        IServerLocator serverLocator = new ServerLocator(logger, jsonSerializer);
 
         // The underlying http stack. Developers can inject their own if desired
         IAsyncHttpClient httpClient = new VolleyHttpClient(logger, context);

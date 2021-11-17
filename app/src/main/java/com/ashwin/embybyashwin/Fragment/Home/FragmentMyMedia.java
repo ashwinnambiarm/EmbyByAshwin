@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 public class FragmentMyMedia extends Fragment {
     ArrayList<MyMedia> myMediaList;
-    private ImageLoader imageLoader;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
