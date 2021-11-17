@@ -50,20 +50,19 @@ public class ActivityLogin extends AppCompatActivity implements FragmentSignIn.F
 
         Intent intent = getIntent();
 
-
-
         embyConnection = new EmbyConnection(getApplicationContext());
 
         embyConnection.getConnection().Connect(new Response<ConnectionResult>() {
             @Override
             public void onResponse(ConnectionResult result) {
 
-                Log.e(TAG, "ConnectionState " + result.getState());
+                Log.e(TAG, "onCreate -> ConnectionState " + result.getState());
 
                 Integer serverCount = result.getServers().size();
-                Log.e(TAG, "Server Count ->" + serverCount);
+                Log.e(TAG, "onCreate -> Server Count ->" + serverCount);
 
-
+                GlobalClass.getInstance().setApiClient((AndroidApiClient) result.getApiClient());
+                embyConnection.setApiClient((AndroidApiClient) result.getApiClient());
                 switch (result.getState())
                 {
                     case ConnectSignIn:
@@ -74,41 +73,35 @@ public class ActivityLogin extends AppCompatActivity implements FragmentSignIn.F
                     case ServerSignIn:
                         // A server was found and the user needs to login.
                         // Display a login screen and authenticate with the server using result.ApiClient
-                        embyConnection.setApiClient((AndroidApiClient) result.getApiClient());
+//                        embyConnection.setApiClient((AndroidApiClient) result.getApiClient());
 
-                        GlobalClass.getInstance().setApiClient((AndroidApiClient) result.getApiClient());
+                        ShowUserSelection();
 
-                        ArrayList<User> users = new ArrayList<User>();
-
-                        embyConnection.getApiClient().GetPublicUsersAsync(new Response<UserDto[]>(){
-                            @Override
-                            public void onResponse(UserDto[] response) {
-                                Log.e(TAG, "Public Users number  ->" + response.length);
-                                for (UserDto user: response) {
-                                    Log.e(TAG, "Public Users  ->" + user.getName());
-                                    users.add(new User(user.getName()));
-                                }
-                                ShowUserSelection(users);
-                            }
-
-                            @Override
-                            public void onError(Exception exception) {
-                                Log.e(TAG, "Users Error ->" + exception.getLocalizedMessage());
-                                ShowUserSelection(null);
-                            }
-                        });
                         break;
                     case ServerSelection:
                         // Multiple servers available
                         // Display a selection screen by calling GetAvailableServers
                         // When a server is chosen, call the Connect overload that accept either a ServerInfo object or a String url.
-                        ShowServerSelection(result.getServers());
+
+
+                        embyConnection.getConnection().GetAvailableServers(new Response<ArrayList<ServerInfo>>(){
+                            @Override
+                            public void onResponse(ArrayList<ServerInfo> response) {
+                                ShowServerSelection(response);
+                            }
+
+                            @Override
+                            public void onError(Exception exception) {
+                                ShowServerSelection(null);
+                                Log.e(TAG, "onCreate -> ServerSelection Error ->" + exception.getLocalizedMessage());
+                            }
+                        });
+
+
                         break;
                     case SignedIn:
                         // A server was found and the user has been signed in using previously saved credentials.
                         // Ready to browse using result.ApiClient
-
-                        GlobalClass.getInstance().setApiClient((AndroidApiClient) result.getApiClient());
 
                         ShowMainActivity();
                         break;
@@ -117,6 +110,71 @@ public class ActivityLogin extends AppCompatActivity implements FragmentSignIn.F
         });
 
 
+    }
+
+
+    private void ConnectToServer(String serverAddress , String tag){
+
+        embyConnection.getConnection().Connect(serverAddress, new Response<ConnectionResult>() {
+
+            @Override
+            public void onResponse(ConnectionResult response) {
+
+                Log.e(TAG, "ConnectToServer (" + tag + ") -> ConnectionState " + response.getState());
+
+                switch (response.getState()) {
+                    case Unavailable:
+                        // Server unreachable
+                        Log.e(TAG, "ConnectToServer (" + tag + ") -> Server unreachable " + serverAddress);
+                        break;
+                    case ServerSignIn:
+                        // A server was found and the user needs to login.
+                        // Display a login screen and authenticate with the server using result.ApiClient
+                        Log.e(TAG, "ConnectToServer  (" + tag + ") -> A server was found and the user needs to login. " + serverAddress);
+
+                        embyConnection.setApiClient((AndroidApiClient) response.getApiClient());
+                        GlobalClass.getInstance().setApiClient((AndroidApiClient) response.getApiClient());
+                        ShowUserSelection();
+
+                        break;
+                    case SignedIn:
+                        // A server was found and the user has been signed in using previously saved credentials.
+                        // Ready to browse using result.ApiClient
+                        Log.e(TAG, "ConnectToServer  (" + tag + ") -> A server was found and the user has been signed in using previously saved credentials. " + serverAddress);
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onError(Exception exception) {
+                Log.e(TAG, exception.getLocalizedMessage());
+            }
+        });
+    }
+
+    private void ShowUserSelection() {
+
+        embyConnection.getApiClient().GetPublicUsersAsync(new Response<UserDto[]>() {
+            @Override
+            public void onResponse(UserDto[] response) {
+
+                ArrayList<User> users = new ArrayList<User>();
+
+                Log.e(TAG, "ShowUserSelection-> Public Users number  ->" + response.length);
+                for (UserDto user : response) {
+                    Log.e(TAG, "ShowUserSelection-> Public Users  ->" + user.getName());
+                    users.add(new User(user.getName()));
+                }
+                ShowUserSelection(users);
+            }
+
+            @Override
+            public void onError(Exception exception) {
+                Log.e(TAG, "ShowUserSelection-> Users Error ->" + exception.getLocalizedMessage());
+                ShowUserSelection(null);
+            }
+        });
     }
 
     private void ShowUserSelection(ArrayList<User> users){
@@ -181,7 +239,7 @@ public class ActivityLogin extends AppCompatActivity implements FragmentSignIn.F
         }
 
         try {
-            if ( embyConnection.getApiClient() != null){
+            if (embyConnection.getApiClient() != null){
                 embyConnection.getApiClient()
                 .AuthenticateUserAsync(username, password,new Response<AuthenticationResult>(){
                     @Override
@@ -212,42 +270,17 @@ public class ActivityLogin extends AppCompatActivity implements FragmentSignIn.F
 
     @Override
     public void OnClickFragmentServers(String serverName, String serverAddress) {
-        Log.e(TAG, "Server item=> " + serverName + " " + serverAddress);
 
         if (serverName == "Add Server" && serverAddress == "ASHWIN"){
-            //Open Add Server Screen
-            Log.e(TAG, "Open Add Server Screen");
+//          Open Add Server Screen
+            Log.e(TAG, "OnClickFragmentServers -> Open Add Server Screen");
 
             loadFragment(new FragmentAddServer(), "ADD_SERVER");
         }else{
-            //Open Sign in Screen
-            Log.e(TAG, "Open Sign in Screen");
+//          Open Sign in Screen
+            Log.e(TAG, "OnClickFragmentServers -> Connecting to Server " + serverAddress);
 
-            embyConnection.getConnection().Connect(serverAddress, new Response<ConnectionResult>() {
-
-                @Override
-                public void onResponse(ConnectionResult response) {
-                    switch (response.getState()) {
-                        case Unavailable:
-                            // Server unreachable
-                            Log.e(TAG, "Server unreachable " + serverAddress);
-                            break;
-                        case ServerSignIn:
-                            // A server was found and the user needs to login.
-                            // Display a login screen and authenticate with the server using result.ApiClient
-                            Log.e(TAG, "A server was found and the user needs to login. " + serverAddress);
-                            loadFragment(new FragmentSignIn(), "SIGN_IN");
-                            break;
-                        case SignedIn:
-                            // A server was found and the user has been signed in using previously saved credentials.
-                            // Ready to browse using result.ApiClient
-                            Log.e(TAG, "A server was found and the user has been signed in using previously saved credentials. " + serverAddress);
-                            break;
-                    }
-
-                }
-
-            });
+            ConnectToServer(serverAddress, "OnClickFragmentServers");
         }
     }
 
@@ -258,36 +291,8 @@ public class ActivityLogin extends AppCompatActivity implements FragmentSignIn.F
 
         Log.e(TAG, "Connecting to Server " + address);
 
-        embyConnection.getConnection().Connect(address, new Response<ConnectionResult>(){
+        ConnectToServer(address, "OnClickFragmentAddServer");
 
-            @Override
-            public void onResponse(ConnectionResult response) {
-                switch (response.getState())
-                {
-                    case Unavailable:
-                        // Server unreachable
-                        Log.e(TAG, "Server unreachable " + address);
-                        break;
-                    case ServerSignIn:
-                        // A server was found and the user needs to login.
-                        // Display a login screen and authenticate with the server using result.ApiClient
-                        Log.e(TAG, "A server was found and the user needs to login. " + address);
-                        break;
-                    case SignedIn:
-                        // A server was found and the user has been signed in using previously saved credentials.
-                        // Ready to browse using result.ApiClient
-                        Log.e(TAG, "A server was found and the user has been signed in using previously saved credentials. " + address);
-                        break;
-                }
-
-            }
-
-            @Override
-            public void onError(Exception exception) {
-                super.onError(exception);
-                Log.e(TAG, "Failed connecting to Server " + address);
-            }
-        });
     }
 
     @Override

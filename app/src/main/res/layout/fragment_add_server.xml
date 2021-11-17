@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="Connect to Server"
             android:textColor="#fff"
-            android:textSize="34sp"
+            android:textSize="24sp"
             android:textAlignment="center"
             android:id="@+id/lbl_add_server"/>
 

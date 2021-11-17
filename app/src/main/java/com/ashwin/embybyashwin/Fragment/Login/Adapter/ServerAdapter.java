@@ -1,6 +1,7 @@
 package com.ashwin.embybyashwin.Fragment.Login.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,7 @@ public class ServerAdapter extends RecyclerView.Adapter<ServerAdapter.ViewHolder
             @Override
             public void onClick(View view) {
                 listener.OnClickServerItem(server.getServerName(), server.getServerAddress());
+//                Log.e("ServerAdapter", "Clcked");
             }
         });
     }

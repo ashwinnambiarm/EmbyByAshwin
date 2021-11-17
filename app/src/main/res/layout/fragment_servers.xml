@@ -15,16 +15,20 @@
             android:layout_height="wrap_content"
             android:text="Select Server"
             android:textColor="#fff"
-            android:textSize="34sp"
+            android:textSize="24sp"
             android:textAlignment="center"
             android:id="@+id/txt_serverSelect"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewServerSelect"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recyclerViewServerSelect"
             android:layout_below="@+id/txt_serverSelect"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:scrollbars="vertical"
+            tools:layoutManager="GridLayoutManager"
+            tools:listitem="@layout/list_item_login"
+            tools:spanCount="2" />
 
     </RelativeLayout>
 </FrameLayout>
