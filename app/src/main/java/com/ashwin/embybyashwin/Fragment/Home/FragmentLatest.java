@@ -1,5 +1,6 @@
 package com.ashwin.embybyashwin.Fragment.Home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.app.Fragment;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ashwin.embybyashwin.ActivityDetails;
+import com.ashwin.embybyashwin.ActivityLogin;
 import com.ashwin.embybyashwin.Fragment.Home.Adapter.LatestAdapter;
 import com.ashwin.embybyashwin.Fragment.Home.Model.MyMedia;
 import com.ashwin.embybyashwin.R;
@@ -55,6 +58,20 @@ public class FragmentLatest extends Fragment {
                 RecyclerView child = new RecyclerView(this.getContext());
 
                 textView.setText(libItem.get(0).getName());
+                textView.setTag(libItem.get(0).getId());
+
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String id = (String) view.getTag();
+
+                        Intent intent = new Intent(getContext(), ActivityDetails.class);
+                        intent.putExtra("VIEW", "GRID");
+                        intent.putExtra("PARENT_ID", id);
+                        startActivity(intent);
+                    }
+                });
+
                 root.addView(textView);
                 root.addView(child);
 

@@ -146,6 +146,7 @@ public class ActivityMain extends AppCompatActivity {
                         MyMedia myMedia = new MyMedia();
                         myMedia.setItemDetials(item);
                         myMedia.setName(parentIds.get(finalCount).getName());
+                        myMedia.setId(parentIds.get(finalCount).getId());
                         myMedia.setThumbanilUrl(apiClient.GetImageUrl(item,options));
                         mytList.add(myMedia);
 
