@@ -5,8 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.Home.FragmentLatest">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rv_latest_tv"/>
+        android:orientation="vertical"
+        android:id="@+id/ll_latest_root">
+
+    </LinearLayout>
+
 </FrameLayout>

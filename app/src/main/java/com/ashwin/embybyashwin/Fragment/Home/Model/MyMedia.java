@@ -1,9 +1,19 @@
 package com.ashwin.embybyashwin.Fragment.Home.Model;
 
-public class MyMedia {
+import mediabrowser.model.dto.BaseItemDto;
 
+public class MyMedia {
+    String name;
     String thumbanilUrl;
-    String mediaName;
+    BaseItemDto _item;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getThumbanilUrl() {
         return thumbanilUrl;
@@ -13,12 +23,12 @@ public class MyMedia {
         this.thumbanilUrl = thumbanilUrl;
     }
 
-    public String getMediaName() {
-        return mediaName;
+    public BaseItemDto getItemDetials() {
+        return _item;
     }
 
-    public void setMediaName(String mediaName) {
-        this.mediaName = mediaName;
+    public void setItemDetials(BaseItemDto mediaName) {
+        this._item = mediaName;
     }
 
 

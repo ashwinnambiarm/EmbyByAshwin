@@ -43,7 +43,7 @@ public class MyMediaAdapter extends RecyclerView.Adapter<MyMediaAdapter.ViewHold
         TextView txtMediaName = holder.txtMediaName;
         ImageView imgPrimary = holder.imgPrimary;
 
-        txtMediaName.setText(myMedia.getMediaName());
+        txtMediaName.setText(myMedia.getItemDetials().getName());
 
         GlobalClass.getInstance().LoadImagetoView(myMedia.getThumbanilUrl(), imgPrimary);
 

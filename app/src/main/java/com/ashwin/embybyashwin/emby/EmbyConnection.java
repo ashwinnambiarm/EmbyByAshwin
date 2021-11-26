@@ -1,12 +1,16 @@
 package com.ashwin.embybyashwin.emby;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.ashwin.embybyashwin.emby.Logger;
+
+import java.util.ArrayList;
 
 import mediabrowser.apiinteraction.ApiEventListener;
 import mediabrowser.apiinteraction.IConnectionManager;
 import mediabrowser.apiinteraction.ICredentialProvider;
+import mediabrowser.apiinteraction.Response;
 import mediabrowser.apiinteraction.android.AndroidApiClient;
 import mediabrowser.apiinteraction.android.AndroidConnectionManager;
 import mediabrowser.apiinteraction.android.AndroidCredentialProvider;
@@ -19,6 +23,7 @@ import mediabrowser.apiinteraction.discovery.IServerLocator;
 import mediabrowser.apiinteraction.discovery.ServerLocator;
 import mediabrowser.apiinteraction.http.IAsyncHttpClient;
 import mediabrowser.apiinteraction.network.INetworkConnection;
+import mediabrowser.model.apiclient.ServerInfo;
 import mediabrowser.model.logging.ILogger;
 import mediabrowser.model.serialization.IJsonSerializer;
 import mediabrowser.model.session.ClientCapabilities;
@@ -27,14 +32,22 @@ public class EmbyConnection  {
 
     private final Context context;
     private AndroidApiClient m_apiClient;
+    private static IConnectionManager INSTANCE = null;
+    String TAG = "EmbyConnection";
 
     public EmbyConnection(Context context){
 
         this.context = context;
         this.m_apiClient = null;
     }
+    public IConnectionManager getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = getConnection();
+        }
+        return(INSTANCE);
+    }
 
-    public IConnectionManager getConnection(){
+    private IConnectionManager getConnection(){
         // Developers are encouraged to create their own ILogger implementation
         ILogger logger = new Logger();
 
@@ -91,4 +104,6 @@ public class EmbyConnection  {
     public AndroidApiClient getApiClient(){
         return m_apiClient;
     }
+
+
 }

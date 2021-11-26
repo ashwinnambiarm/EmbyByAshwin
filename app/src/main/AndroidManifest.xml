@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ashwin.embybyashwin">
+    package="com.ashwin.embybyashwin" >
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -12,13 +12,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".ActivityDetails"
+            android:exported="false" />
         <activity
             android:name=".ActivityLaunch"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_launch"
-            android:theme="@style/LaunchTheme">
+            android:theme="@style/LaunchTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,14 +31,13 @@
             android:name=".ActivityMain"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_login"
-            android:theme="@style/FullscreenNoActionBarStyle">
-
+            android:theme="@style/FullscreenNoActionBarStyle" >
         </activity>
         <activity
             android:name=".ActivityLogin"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_login"
-            android:theme="@style/FullscreenNoActionBarStyle"></activity>
+            android:theme="@style/FullscreenNoActionBarStyle" />
     </application>
 
 </manifest>

@@ -29,7 +29,11 @@ import mediabrowser.model.dto.BaseItemDto;
 import mediabrowser.model.dto.ImageOptions;
 import mediabrowser.model.dto.UserDto;
 import mediabrowser.model.entities.ImageType;
+import mediabrowser.model.entities.LocationType;
+import mediabrowser.model.entities.SortOrder;
 import mediabrowser.model.logging.NullLogger;
+import mediabrowser.model.querying.ItemFilter;
+import mediabrowser.model.querying.ItemQuery;
 import mediabrowser.model.querying.ItemsResult;
 import mediabrowser.model.querying.LatestItemsQuery;
 
@@ -51,7 +55,7 @@ public class ActivityMain extends AppCompatActivity {
         apiClient = GlobalClass.getInstance().getApiClient();
 
         LoadMyMedia();
-        LoadLatest();
+//        LoadLatest();
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,17 +77,24 @@ public class ActivityMain extends AppCompatActivity {
                 ImageOptions options = new ImageOptions();
                 options.setImageType(ImageType.Primary);
                 options.setFormat(ImageFormat.Png);
-                options.setMaxHeight(107);
+                options.setMaxWidth(280);
+
+                ArrayList<BaseItemDto> ParentIds = new ArrayList();
 
                 for (BaseItemDto item: response.getItems()) {
                     Log.e(TAG, "Library  ->" + item.getName()
                             + " Library image url ->" + apiClient.GetImageUrl(item,options));
                     MyMedia myMedia = new MyMedia();
-                    myMedia.setMediaName(item.getName());
+                    myMedia.setItemDetials(item);
                     myMedia.setThumbanilUrl(apiClient.GetImageUrl(item,options));
 
+                    ParentIds.add(item);
                     myMediaList.add(myMedia);
+
+
                 }
+
+                LoadLatest(ParentIds);
 
                 fragmentMyMedia.setMyMediaList(myMediaList);
 
@@ -92,42 +103,64 @@ public class ActivityMain extends AppCompatActivity {
         });
     }
 
-    private void LoadLatest(){
+    private void LoadLatest(ArrayList<BaseItemDto> parentIds){
         // TODO: Added Latest Items
 
         FragmentLatest fragmentLatest = new FragmentLatest();
 
-        ArrayList<MyMedia> myLatestTvList = new ArrayList<MyMedia>();
+        ArrayList myLatestList = new ArrayList<>();
 
-        LatestItemsQuery query = new LatestItemsQuery();
-        query.setUserId(apiClient.getCurrentUserId());
-        query.setGroupItems(true);
-        Log.e(TAG, "LoadLatest loading ");
-        apiClient.GetLatestItems(query,new Response<BaseItemDto[]>(){
-            @Override
-            public void onResponse(BaseItemDto[] response) {
-                ImageOptions options = new ImageOptions();
-                options.setImageType(ImageType.Primary);
-                options.setFormat(ImageFormat.Png);
-                options.setMaxHeight(172);
+        for (Integer count = 0; count < parentIds.size() ; count++) {
 
-                for (BaseItemDto item: response) {
-                    Log.e(TAG, "Library  ->" + item.getName());
-                    MyMedia myMedia = new MyMedia();
-                    myMedia.setMediaName(item.getName());
-                    myMedia.setThumbanilUrl(apiClient.GetImageUrl(item,options));
-                    myLatestTvList.add(myMedia);
+            String parentId = parentIds.get(count).getId();
+
+//            Log.e(TAG, "LoadLatest loading Parent ID " + parentId);
+
+            ItemQuery query_2 = new ItemQuery();
+//            query_2.setFilters(new ItemFilter[]{ItemFilter.IsNotFolder});
+            query_2.setLimit(10);
+            query_2.setRecursive(true);
+            query_2.setIncludeItemTypes(new String[]{"Movie","Series"});
+            query_2.setSortBy(new String[]{"DateCreated"});
+            query_2.setSortOrder(SortOrder.Descending);
+            query_2.setParentId(parentId);
+            query_2.setUserId(apiClient.getCurrentUserId());
+
+            Integer finalCount = count;
+            apiClient.GetItemsAsync(query_2, new Response<ItemsResult>(){
+                @Override
+                public void onResponse(ItemsResult response) {
+
+                    ImageOptions options = new ImageOptions();
+                    options.setImageType(ImageType.Primary);
+                    options.setFormat(ImageFormat.Png);
+                    options.setMaxWidth(240);
+
+                    ArrayList<MyMedia> mytList = new ArrayList<MyMedia>();
+
+                    for (BaseItemDto item: response.getItems()) {
+//                        Log.e(TAG, "Parent ID " + parentId + " " + item.getName());
+//                        Log.e(TAG, "getType " + item.getType());
+//                        Log.e(TAG, "getMediaType " + item.getMediaType());
+
+                        MyMedia myMedia = new MyMedia();
+                        myMedia.setItemDetials(item);
+                        myMedia.setName(parentIds.get(finalCount).getName());
+                        myMedia.setThumbanilUrl(apiClient.GetImageUrl(item,options));
+                        mytList.add(myMedia);
+
+                    }
+                    myLatestList.add(mytList);
+
+                    if (finalCount == (parentIds.size()-1)){
+                        Log.e(TAG, "Last Item " + finalCount);
+                        fragmentLatest.setLatestList(myLatestList);
+                        loadFragment(fragmentLatest, R.id.fl_home_section_2);
+                    }
                 }
-                fragmentLatest.setTvShowList(myLatestTvList);
+            });
+        }
 
-                loadFragment(fragmentLatest, R.id.fl_home_section_2);
-            }
-
-            @Override
-            public void onError(Exception exception) {
-                Log.e(TAG, "LoadLatest failed " + exception.getLocalizedMessage());
-            }
-        });
     }
 
     private void loadFragment(Fragment fragment, Integer layoutID){
@@ -137,7 +170,7 @@ public class ActivityMain extends AppCompatActivity {
                     .replace(layoutID, fragment)
                     .addToBackStack(null);
             fragmentTransaction.commit();
-            Log.e(TAG, "fragment loaded");
+            Log.e(TAG, "fragment loaded " + fragment.getTag());
         }else {
             Log.e(TAG, "fragment is null");
         }

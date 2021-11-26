@@ -52,7 +52,7 @@ public class ActivityLogin extends AppCompatActivity implements FragmentSignIn.F
 
         embyConnection = new EmbyConnection(getApplicationContext());
 
-        embyConnection.getConnection().Connect(new Response<ConnectionResult>() {
+        embyConnection.getInstance().Connect(new Response<ConnectionResult>() {
             @Override
             public void onResponse(ConnectionResult result) {
 
@@ -68,7 +68,20 @@ public class ActivityLogin extends AppCompatActivity implements FragmentSignIn.F
                     case ConnectSignIn:
                         // Connect sign in screen should be presented
                         // Authenticate using LoginToConnect, then call Connect again to start over
-                        ShowServerSelection(null);
+
+                        embyConnection.getInstance().GetAvailableServers(new Response<ArrayList<ServerInfo>>(){
+                            @Override
+                            public void onResponse(ArrayList<ServerInfo> response) {
+                                ShowServerSelection(response);
+                            }
+
+                            @Override
+                            public void onError(Exception exception) {
+                                ShowServerSelection(null);
+                                Log.e(TAG, "onCreate -> ServerSelection Error ->" + exception.getLocalizedMessage());
+                            }
+                        });
+
                         break;
                     case ServerSignIn:
                         // A server was found and the user needs to login.
@@ -84,7 +97,7 @@ public class ActivityLogin extends AppCompatActivity implements FragmentSignIn.F
                         // When a server is chosen, call the Connect overload that accept either a ServerInfo object or a String url.
 
 
-                        embyConnection.getConnection().GetAvailableServers(new Response<ArrayList<ServerInfo>>(){
+                        embyConnection.getInstance().GetAvailableServers(new Response<ArrayList<ServerInfo>>(){
                             @Override
                             public void onResponse(ArrayList<ServerInfo> response) {
                                 ShowServerSelection(response);
@@ -115,7 +128,7 @@ public class ActivityLogin extends AppCompatActivity implements FragmentSignIn.F
 
     private void ConnectToServer(String serverAddress , String tag){
 
-        embyConnection.getConnection().Connect(serverAddress, new Response<ConnectionResult>() {
+        embyConnection.getInstance().Connect(serverAddress, new Response<ConnectionResult>() {
 
             @Override
             public void onResponse(ConnectionResult response) {
@@ -259,7 +272,7 @@ public class ActivityLogin extends AppCompatActivity implements FragmentSignIn.F
 
     @Override
     public void OnClickFragmentSignInChangeServer() {
-        embyConnection.getConnection().Connect(new Response<ConnectionResult>() {
+        embyConnection.getInstance().Connect(new Response<ConnectionResult>() {
            @Override
            public void onResponse(ConnectionResult response) {
                ShowServerSelection(response.getServers());
