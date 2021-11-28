@@ -28,8 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-
         app:labelVisibilityMode="labeled"
-        app:menu="@menu/nav_bottom_activity_main" />
+        app:menu="@menu/nav_bottom_activity_main"
+        style="@style/BottomNavigation"/>
 
 </RelativeLayout>

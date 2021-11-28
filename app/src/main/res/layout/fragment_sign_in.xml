@@ -9,13 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#000">
+        android:background="@color/colorBlack">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Please Sign In"
-            android:textColor="#fff"
+            android:textColor="@color/colorWhite"
             android:textSize="24sp"
             android:textAlignment="center"
             android:id="@+id/lbl_signin"/>
@@ -24,7 +24,7 @@
             android:id="@+id/lbl_signin_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#fff"
+            android:textColor="@color/colorWhite"
             android:text="User Name"
             android:layout_below="@+id/lbl_signin"/>
 
@@ -36,13 +36,13 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:text=""
-            android:textColor="#fff" />
+            android:textColor="@color/colorWhite" />
 
         <TextView
             android:id="@+id/lbl_signin_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#fff"
+            android:textColor="@color/colorWhite"
             android:text="Password"
             android:layout_below="@+id/txt_signin_username"/>
 
@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:textColor="#fff"
+            android:textColor="@color/colorWhite"
             android:inputType="textPassword"
             android:text=""
             android:layout_below="@+id/lbl_signin_password"/>

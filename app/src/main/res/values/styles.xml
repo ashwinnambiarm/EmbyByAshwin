@@ -16,4 +16,10 @@
         <item name="android:windowBackground">@color/black_overlay</item>
     </style>
 
+    <style name="BottomNavigation">
+        <item name="android:background">@color/colorBlack</item>
+        <item name="itemBackground">@color/colorBlack</item>
+        <item name="itemIconTint">@color/colorWhite</item>
+        <item name="itemTextColor">@color/colorWhite</item>
+    </style>
 </resources>

@@ -8,13 +8,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000">
+        android:background="@color/colorBlack">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Select Server"
-            android:textColor="#fff"
+            android:textColor="@color/colorWhite"
             android:textSize="24sp"
             android:textAlignment="center"
             android:id="@+id/txt_serverSelect"/>

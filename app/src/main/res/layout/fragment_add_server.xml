@@ -9,13 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#000">
+        android:background="@color/colorBlack">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Connect to Server"
-            android:textColor="#fff"
+            android:textColor="@color/colorWhite"
             android:textSize="24sp"
             android:textAlignment="center"
             android:id="@+id/lbl_add_server"/>
@@ -25,14 +25,14 @@
             android:layout_height="wrap_content"
             android:text="Host:"
             android:layout_below="@+id/lbl_add_server"
-            android:textColor="#fff"
+            android:textColor="@color/colorWhite"
             android:id="@+id/lbl_add_server_address"
             />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txt_add_server_address"
-            android:textColor="#fff"
+            android:textColor="@color/colorWhite"
             android:text="localhost"
             android:layout_below="@+id/lbl_add_server_address"/>
 
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Port:"
-            android:textColor="#fff"
+            android:textColor="@color/colorWhite"
             android:id="@+id/lbl_add_server_port"
             android:layout_below="@+id/txt_add_server_address"
             />
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/txt_add_server_port"
             android:text="8096"
-            android:textColor="#fff"
+            android:textColor="@color/colorWhite"
             android:layout_below="@+id/lbl_add_server_port"/>
 
         <Button

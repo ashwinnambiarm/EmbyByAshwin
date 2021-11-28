@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="Dummy"
         android:textAlignment="center"
-        android:textColor="#fff"
+        android:textColor="@color/colorWhite"
         android:padding="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
