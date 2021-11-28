@@ -58,6 +58,13 @@ public class FragmentHome extends Fragment {
         return v;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume");
+        LoadMyMedia();
+    }
+
     private void LoadMyMedia(){
         FragmentMyMedia fragmentMyMedia = new FragmentMyMedia();
 
@@ -161,8 +168,7 @@ public class FragmentHome extends Fragment {
         if (fragment !=null){
             FragmentManager fm = getFragmentManager();
             FragmentTransaction fragmentTransaction = fm.beginTransaction()
-                    .replace(layoutID, fragment)
-                    .addToBackStack(null);
+                    .replace(layoutID, fragment);
             fragmentTransaction.commit();
             Log.e(TAG, "fragment loaded " + fragment.getTag());
         }else {

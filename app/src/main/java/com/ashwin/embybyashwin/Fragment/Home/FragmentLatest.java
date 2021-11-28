@@ -1,5 +1,6 @@
 package com.ashwin.embybyashwin.Fragment.Home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -20,6 +21,7 @@ import com.ashwin.embybyashwin.ActivityDetails;
 import com.ashwin.embybyashwin.ActivityLogin;
 import com.ashwin.embybyashwin.Fragment.Home.Adapter.LatestAdapter;
 import com.ashwin.embybyashwin.Fragment.Home.Model.MyMedia;
+import com.ashwin.embybyashwin.Fragment.Login.FragmentServers;
 import com.ashwin.embybyashwin.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
@@ -31,8 +33,14 @@ import mediabrowser.model.dto.BaseItemDto;
 
 public class FragmentLatest extends Fragment {
 
-    private static final String TAG = "FragmentLatest";
+    private static final String TAG = FragmentLatest.class.getSimpleName();
     private ArrayList<ArrayList<MyMedia>> latestList;
+
+    FragmentLatest.FragmentLatestOnClickListener listener;
+
+    public interface FragmentLatestOnClickListener{
+        void OnClickFragmentLatestViewAll(String itemID);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,11 +72,7 @@ public class FragmentLatest extends Fragment {
                     @Override
                     public void onClick(View view) {
                         String id = (String) view.getTag();
-
-                        Intent intent = new Intent(getContext(), ActivityDetails.class);
-                        intent.putExtra("VIEW", "GRID");
-                        intent.putExtra("PARENT_ID", id);
-                        startActivity(intent);
+                        listener.OnClickFragmentLatestViewAll(id);
                     }
                 });
 
@@ -82,6 +86,23 @@ public class FragmentLatest extends Fragment {
         }
 
         return v;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof FragmentLatest.FragmentLatestOnClickListener){
+            listener = (FragmentLatest.FragmentLatestOnClickListener) context;
+        }else {
+            throw new RuntimeException(context.toString()
+                    + " must implement FragmentLatestOnClickListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
     }
 
     public void setLatestList (ArrayList mediaList){
