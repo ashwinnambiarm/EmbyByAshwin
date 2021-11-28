@@ -114,6 +114,15 @@ public class ActivityMain extends AppCompatActivity implements FragmentLatest.Fr
         apiClient = null;
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (getFragmentManager().getBackStackEntryCount() == 0){
+            finish();
+        }
+        Log.e(TAG, String.valueOf(getFragmentManager().getBackStackEntryCount()));
+    }
 
     @Override
     public void OnClickFragmentLatestViewAll(String itemID) {
