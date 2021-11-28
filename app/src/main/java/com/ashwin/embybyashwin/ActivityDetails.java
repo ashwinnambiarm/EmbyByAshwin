@@ -38,72 +38,10 @@ public class ActivityDetails extends AppCompatActivity {
 
         apiClient = GlobalClass.getInstance().getApiClient();
 
-        Intent intent = getIntent();
-        String view = intent.getStringExtra("VIEW");
-        String parentID = intent.getStringExtra("PARENT_ID");
-        Log.e(TAG, view);
-        Log.e(TAG, parentID);
-
-        switch (view){
-            case "GRID":
-//                LoadGridView(parentID);
-                break;
-            case "Item":
-//                LoadItemView(parentID);
-                break;
-        }
-
+//        Intent intent = getIntent();
+//        String view = intent.getStringExtra("VIEW");
+//        String parentID = intent.getStringExtra("PARENT_ID");
+//        Log.e(TAG, view);
+//        Log.e(TAG, parentID);
     }
-
-//    private void LoadGridView(String parentID) {
-//        if (fragmentGrid == null) { fragmentGrid = new FragmentView();}
-//
-//        ItemQuery query_2 = new ItemQuery();
-//        query_2.setRecursive(true);
-//        query_2.setIncludeItemTypes(new String[]{"Movie","Series"});
-//        query_2.setSortBy(new String[]{"DateCreated"});
-//        query_2.setSortOrder(SortOrder.Descending);
-//        query_2.setParentId(parentID);
-//        query_2.setUserId(apiClient.getCurrentUserId());
-//
-//        apiClient.GetItemsAsync(query_2, new Response<ItemsResult>() {
-//            @Override
-//            public void onResponse(ItemsResult response) {
-//                ImageOptions options = new ImageOptions();
-//                options.setImageType(ImageType.Primary);
-//                options.setFormat(ImageFormat.Png);
-//                options.setMaxWidth(240);
-//
-//                ArrayList<MyMedia> myList = new ArrayList<MyMedia>();
-//                for (BaseItemDto item: response.getItems()) {
-//                    MyMedia myMedia = new MyMedia();
-//                    myMedia.setItemDetials(item);
-//                    myMedia.setName(item.getName());
-//                    myMedia.setId(item.getId());
-//                    myMedia.setThumbanilUrl(apiClient.GetImageUrl(item,options));
-//                    myList.add(myMedia);
-//                }
-//
-//                fragmentGrid.setLatestList(myList);
-//                loadFragment(fragmentGrid, R.id.fl_activity_details);
-//            }
-//        });
-//    }
-//
-//    private void LoadItemView(String parentID) {
-//
-//    }
-//
-//    private void loadFragment(Fragment fragment, Integer layoutID){
-//        if (fragment !=null){
-//            FragmentManager fm = getFragmentManager();
-//            FragmentTransaction fragmentTransaction = fm.beginTransaction()
-//                    .replace(layoutID, fragment)
-//                    .addToBackStack(null);
-//            fragmentTransaction.commit();
-//            Log.e(TAG, "fragment loaded " + fragment.getClass().getName());
-//        }else {
-//            Log.e(TAG, "fragment is null");
-//        }
-//    }
 }
