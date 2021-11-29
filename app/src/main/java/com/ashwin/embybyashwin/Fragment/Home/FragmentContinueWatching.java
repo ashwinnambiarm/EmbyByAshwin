@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 public class FragmentContinueWatching extends Fragment {
     private ArrayList<MyMedia> mediaList;
+    private String TAG = FragmentContinueWatching.class.getSimpleName();
 
     public FragmentContinueWatching() {
         // Required empty public constructor
@@ -44,7 +45,7 @@ public class FragmentContinueWatching extends Fragment {
         View v = inflater.inflate(R.layout.fragment_continue_watching, container, false);
         RecyclerView recyclerView = v.findViewById(R.id.rv_continue_watching);
 
-        if (mediaList == null){ mediaList = new ArrayList<>();}
+        if (mediaList == null){mediaList = new ArrayList<>(); }
 
         ViewOptions viewOptions = new ViewOptions();
         viewOptions.setShowProgressBar(true);
