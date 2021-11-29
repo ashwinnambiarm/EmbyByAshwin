@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,11 +44,13 @@ public class LandscapeViewAdapter extends RecyclerView.Adapter<LandscapeViewAdap
         MyMedia myMedia = mediaList.get(position);
 
         ImageView imgPrimary = holder.imgPrimary;
+        ProgressBar progressBar = holder.progressBar;
 
         GlobalClass.getInstance().LoadImagetoView(myMedia.getThumbanilUrl(), imgPrimary);
 
-        if (viewOptions.isShowProgressBar()){
-            Log.e(TAG, "isShowProgressBar");
+        if (viewOptions.isShowProgressBar() && myMedia.getItemDetials().getCanResume()){
+            Integer i = (int) (myMedia.getItemDetials().getResumePositionTicks() * 100 /  myMedia.getItemDetials().getRunTimeTicks());
+            progressBar.setProgress(i);
         }
     }
 
@@ -58,11 +61,13 @@ public class LandscapeViewAdapter extends RecyclerView.Adapter<LandscapeViewAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private final ImageView imgPrimary;
+        private final ProgressBar progressBar;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             imgPrimary = (ImageView) itemView.findViewById(R.id.img_list_item_landscape_view);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.pb_list_item_landscape_view);
         }
     }
 }
