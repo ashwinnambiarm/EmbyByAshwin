@@ -49,8 +49,8 @@ public class FragmentHome extends Fragment {
         super.onCreate(savedInstanceState);
 
         apiClient = GlobalClass.getInstance().getApiClient();
-        LoadMyMedia();
-        loadContinueWatching();
+//        LoadMyMedia();
+//        loadContinueWatching();
     }
 
     @Override
@@ -65,6 +65,7 @@ public class FragmentHome extends Fragment {
         super.onResume();
         Log.e(TAG, "onResume");
         LoadMyMedia();
+        loadContinueWatching();
     }
 
     private void LoadMyMedia(){
@@ -156,7 +157,7 @@ public class FragmentHome extends Fragment {
                     myLatestList.add(mytList);
 
                     if (finalCount == (parentIds.size()-1)){
-                        Log.e(TAG, "Last Item " + finalCount);
+                        Log.e(TAG, "LoadLatest Last Item->" + finalCount);
                         fragmentLatest.setLatestList(myLatestList);
                         loadFragment(fragmentLatest, R.id.fl_home_section_2);
                     }
@@ -169,6 +170,7 @@ public class FragmentHome extends Fragment {
     private void loadContinueWatching(){
         ItemQuery query = new ItemQuery();
         query.setUserId(apiClient.getCurrentUserId());
+        query.setLimit(10);
         query.setRecursive(true);
         query.setFilters(new ItemFilter[]{ItemFilter.IsResumable});
 
@@ -176,25 +178,25 @@ public class FragmentHome extends Fragment {
             @Override
             public void onResponse(ItemsResult response) {
 
-                ImageOptions options = new ImageOptions();
-                options.setImageType(ImageType.Backdrop);
-                options.setFormat(ImageFormat.Png);
-                options.setMaxWidth(240);
 
-                ArrayList<MyMedia> mytList = new ArrayList<MyMedia>();
 
+                ArrayList<MyMedia> myList = new ArrayList<MyMedia>();
+
+//                Log.e(TAG, "loadContinueWatching Count->"  + response.getItems().length);
                 for (BaseItemDto item: response.getItems()) {
                     Log.e(TAG, "loadContinueWatching ->"  + item.getName());
                     MyMedia myMedia = new MyMedia();
                     myMedia.setItemDetials(item);
-                    myMedia.setName(item.getName());
-                    myMedia.setId(item.getId());
-                    myMedia.setThumbanilUrl(apiClient.GetImageUrl(item,options));
-                    mytList.add(myMedia);
+//                    myMedia.setName(item.getName());
+//                    myMedia.setId(item.getId());
+//                    myMedia.setThumbanilUrl(apiClient.GetImageUrl(item,options));
+                    myList.add(myMedia);
                 }
 
+                Log.e(TAG, "loadContinueWatching myList Count->"  + myList.size());
+
                 FragmentContinueWatching fragmentContinueWatching = FragmentContinueWatching.newInstance();
-                fragmentContinueWatching.setMediaList(mytList);
+                fragmentContinueWatching.setMediaList(myList);
                 loadFragment(fragmentContinueWatching, R.id.fl_home_section_3);
             }
         });
@@ -206,7 +208,7 @@ public class FragmentHome extends Fragment {
             FragmentTransaction fragmentTransaction = fm.beginTransaction()
                     .replace(layoutID, fragment);
             fragmentTransaction.commit();
-            Log.e(TAG, "fragment loaded " + fragment.getTag());
+            Log.e(TAG, "fragment loaded " + fragment.getClass().getSimpleName());
         }else {
             Log.e(TAG, "fragment is null");
         }
