@@ -24,6 +24,7 @@ import mediabrowser.model.dto.BaseItemDto;
 import mediabrowser.model.dto.ImageOptions;
 import mediabrowser.model.entities.ImageType;
 import mediabrowser.model.entities.SortOrder;
+import mediabrowser.model.querying.ItemFilter;
 import mediabrowser.model.querying.ItemQuery;
 import mediabrowser.model.querying.ItemsResult;
 
@@ -49,6 +50,7 @@ public class FragmentHome extends Fragment {
 
         apiClient = GlobalClass.getInstance().getApiClient();
         LoadMyMedia();
+        loadContinueWatching();
     }
 
     @Override
@@ -162,6 +164,40 @@ public class FragmentHome extends Fragment {
             });
         }
 
+    }
+
+    private void loadContinueWatching(){
+        ItemQuery query = new ItemQuery();
+        query.setUserId(apiClient.getCurrentUserId());
+        query.setRecursive(true);
+        query.setFilters(new ItemFilter[]{ItemFilter.IsResumable});
+
+        apiClient.GetItemsAsync(query, new Response<ItemsResult>(){
+            @Override
+            public void onResponse(ItemsResult response) {
+
+                ImageOptions options = new ImageOptions();
+                options.setImageType(ImageType.Backdrop);
+                options.setFormat(ImageFormat.Png);
+                options.setMaxWidth(240);
+
+                ArrayList<MyMedia> mytList = new ArrayList<MyMedia>();
+
+                for (BaseItemDto item: response.getItems()) {
+                    Log.e(TAG, "loadContinueWatching ->"  + item.getName());
+                    MyMedia myMedia = new MyMedia();
+                    myMedia.setItemDetials(item);
+                    myMedia.setName(item.getName());
+                    myMedia.setId(item.getId());
+                    myMedia.setThumbanilUrl(apiClient.GetImageUrl(item,options));
+                    mytList.add(myMedia);
+                }
+
+                FragmentContinueWatching fragmentContinueWatching = FragmentContinueWatching.newInstance();
+                fragmentContinueWatching.setMediaList(mytList);
+                loadFragment(fragmentContinueWatching, R.id.fl_home_section_3);
+            }
+        });
     }
 
     private void loadFragment(Fragment fragment, Integer layoutID){

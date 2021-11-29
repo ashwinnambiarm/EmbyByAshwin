@@ -23,6 +23,13 @@
             android:layout_marginTop="10dp"
             android:layout_below="@id/fl_home_section_1"/>
 
+        <FrameLayout
+            android:id="@+id/fl_home_section_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/fl_home_section_2"/>
+
     </LinearLayout>
 
 </FrameLayout>
