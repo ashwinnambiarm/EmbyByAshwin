@@ -22,4 +22,5 @@
         <item name="itemIconTint">@color/colorWhite</item>
         <item name="itemTextColor">@color/colorWhite</item>
     </style>
+
 </resources>
