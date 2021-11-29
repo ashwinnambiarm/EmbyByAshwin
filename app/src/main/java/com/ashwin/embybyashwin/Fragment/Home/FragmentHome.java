@@ -33,7 +33,7 @@ public class FragmentHome extends Fragment {
 
 
     private AndroidApiClient apiClient;
-    private String TAG = FragmentHome.class.getName();
+    private String TAG = FragmentHome.class.getSimpleName();
 
     public FragmentHome() {
         // Required empty public constructor
