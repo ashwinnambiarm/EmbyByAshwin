@@ -94,7 +94,7 @@ public class FragmentHome extends Fragment {
 
 
     private void LoadLatest(ArrayList<BaseItemDto> parentIds){
-        // TODO: Added Latest Items
+        // TODO: 12/1/2021  Need to Latest Title
 
         FragmentLatest fragmentLatest = new FragmentLatest();
 
