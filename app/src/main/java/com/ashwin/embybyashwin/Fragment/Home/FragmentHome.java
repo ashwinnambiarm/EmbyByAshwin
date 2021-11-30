@@ -16,6 +16,7 @@ import com.ashwin.embybyashwin.R;
 import com.ashwin.embybyashwin.emby.GlobalClass;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import mediabrowser.apiinteraction.Response;
 import mediabrowser.apiinteraction.android.AndroidApiClient;
@@ -71,34 +72,20 @@ public class FragmentHome extends Fragment {
     private void LoadMyMedia(){
         FragmentMyMedia fragmentMyMedia = new FragmentMyMedia();
 
-        ArrayList<MyMedia> myMediaList = new ArrayList<MyMedia>();
+        ArrayList<BaseItemDto> myList = new ArrayList<>();
 
         apiClient.GetUserViews(apiClient.getCurrentUserId(), new Response<ItemsResult>(){
             @Override
             public void onResponse(ItemsResult response) {
-                ImageOptions options = new ImageOptions();
-                options.setImageType(ImageType.Primary);
-                options.setFormat(ImageFormat.Png);
-                options.setMaxWidth(280);
 
-                ArrayList<BaseItemDto> ParentIds = new ArrayList();
 
                 for (BaseItemDto item: response.getItems()) {
-                    Log.e(TAG, "Library  ->" + item.getName()
-                            + " Library image url ->" + apiClient.GetImageUrl(item,options));
-                    MyMedia myMedia = new MyMedia();
-                    myMedia.setItemDetials(item);
-                    myMedia.setThumbanilUrl(apiClient.GetImageUrl(item,options));
-
-                    ParentIds.add(item);
-                    myMediaList.add(myMedia);
-
-
+                    myList.add(item);
                 }
 
-                LoadLatest(ParentIds);
+                LoadLatest(myList);
 
-                fragmentMyMedia.setMyMediaList(myMediaList);
+                fragmentMyMedia.setMyMediaList(myList);
 
                 loadFragment(fragmentMyMedia, R.id.fl_home_section_1);
             }
@@ -134,27 +121,13 @@ public class FragmentHome extends Fragment {
                 @Override
                 public void onResponse(ItemsResult response) {
 
-                    ImageOptions options = new ImageOptions();
-                    options.setImageType(ImageType.Primary);
-                    options.setFormat(ImageFormat.Png);
-                    options.setMaxWidth(240);
-
-                    ArrayList<MyMedia> mytList = new ArrayList<MyMedia>();
+                    ArrayList<BaseItemDto> myList = new ArrayList<>();
 
                     for (BaseItemDto item: response.getItems()) {
-//                        Log.e(TAG, "Parent ID " + parentId + " " + item.getName());
-//                        Log.e(TAG, "getType " + item.getType());
-//                        Log.e(TAG, "getMediaType " + item.getMediaType());
-
-                        MyMedia myMedia = new MyMedia();
-                        myMedia.setItemDetials(item);
-                        myMedia.setName(parentIds.get(finalCount).getName());
-                        myMedia.setId(parentIds.get(finalCount).getId());
-                        myMedia.setThumbanilUrl(apiClient.GetImageUrl(item,options));
-                        mytList.add(myMedia);
-
+                        myList.add(item);
                     }
-                    myLatestList.add(mytList);
+
+                    myLatestList.add(myList);
 
                     if (finalCount == (parentIds.size()-1)){
                         Log.e(TAG, "LoadLatest Last Item->" + finalCount);

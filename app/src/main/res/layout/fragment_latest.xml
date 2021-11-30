@@ -9,6 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingRight="@dimen/main_margin"
+        android:paddingLeft="@dimen/main_margin"
+        android:clipToPadding="false"
+        android:clipChildren="false"
         android:id="@+id/ll_latest_root">
 
     </LinearLayout>

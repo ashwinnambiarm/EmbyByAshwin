@@ -19,6 +19,7 @@ import com.ashwin.embybyashwin.R;
 import java.util.ArrayList;
 
 import mediabrowser.model.dto.BaseItemDto;
+import mediabrowser.model.entities.ImageType;
 
 public class FragmentContinueWatching extends Fragment {
     private ArrayList<BaseItemDto> mediaList;
@@ -51,6 +52,7 @@ public class FragmentContinueWatching extends Fragment {
 
         ViewOptions viewOptions = new ViewOptions();
         viewOptions.setShowProgressBar(true);
+        viewOptions.setImageType(ImageType.Backdrop);
         LandscapeViewAdapter adapter = new LandscapeViewAdapter(mediaList, viewOptions);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false));

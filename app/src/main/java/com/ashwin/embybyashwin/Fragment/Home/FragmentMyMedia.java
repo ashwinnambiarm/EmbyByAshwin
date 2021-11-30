@@ -13,15 +13,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.ashwin.embybyashwin.Fragment.Home.Adapter.LandscapeViewAdapter;
 import com.ashwin.embybyashwin.Fragment.Home.Adapter.MyMediaAdapter;
+import com.ashwin.embybyashwin.Fragment.Home.Adapter.ViewOptions;
 import com.ashwin.embybyashwin.Fragment.Home.Model.MyMedia;
 import com.ashwin.embybyashwin.Fragment.Login.Model.Server;
 import com.ashwin.embybyashwin.R;
 
 import java.util.ArrayList;
 
+import mediabrowser.model.dto.BaseItemDto;
+import mediabrowser.model.entities.ImageType;
+
 public class FragmentMyMedia extends Fragment {
-    ArrayList<MyMedia> myMediaList;
+    ArrayList<BaseItemDto> myMediaList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,11 +43,15 @@ public class FragmentMyMedia extends Fragment {
         RecyclerView rvMyMedia = (RecyclerView) v.findViewById(R.id.rv_my_media);
 
         if (myMediaList == null){
-            myMediaList = new ArrayList<MyMedia>();
+            myMediaList = new ArrayList<BaseItemDto>();
         }
 
 
-        MyMediaAdapter adapter = new MyMediaAdapter(myMediaList);
+        ViewOptions option =  new ViewOptions();
+        option.setShowProgressBar(false);
+        option.setImageType(ImageType.Primary);
+
+        LandscapeViewAdapter adapter = new LandscapeViewAdapter(myMediaList, option);
 
         rvMyMedia.setAdapter(adapter);
         rvMyMedia.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false));
@@ -50,7 +59,7 @@ public class FragmentMyMedia extends Fragment {
         return v;
     }
 
-    public void setMyMediaList (ArrayList<MyMedia> mediaList){
+    public void setMyMediaList (ArrayList<BaseItemDto> mediaList){
         myMediaList = mediaList;
     }
 }

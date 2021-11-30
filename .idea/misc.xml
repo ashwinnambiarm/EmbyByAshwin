@@ -3,9 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/drawable/rounded_corner.xml" value="0.27890625" />
         <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/activity_launch.xml" value="0.1" />
         <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/activity_login.xml" value="0.18854166666666666" />
-        <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/activity_main.xml" value="0.39828693790149894" />
+        <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/fragment_add_server.xml" value="0.1" />
         <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/fragment_blank.xml" value="0.15625" />
         <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/fragment_continue_watching.xml" value="0.1" />
@@ -13,15 +14,16 @@
         <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/fragment_grid_view.xml" value="0.1" />
         <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/fragment_latest.xml" value="0.16556291390728478" />
-        <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/fragment_my_media.xml" value="0.1" />
+        <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/fragment_my_media.xml" value="0.33" />
         <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/fragment_search.xml" value="0.2828125" />
         <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/fragment_servers.xml" value="0.1" />
         <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/fragment_sign_in.xml" value="0.1" />
         <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/fragment_users.xml" value="0.1" />
-        <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/list_item_landscape_view.xml" value="0.6538461538461539" />
+        <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/list_item_landscape_view.xml" value="0.8522727272727273" />
         <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/list_item_login.xml" value="0.33" />
+        <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/list_item_portrait_view.xml" value="0.22618061309030654" />
         <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/list_library_item.xml" value="0.1" />
-        <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/list_media_item.xml" value="1.0" />
+        <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/layout/list_media_item.xml" value="0.5965909090909091" />
         <entry key="..\:/Users/ashwin/AndroidStudioProjects/EmbyByAshwin/app/src/main/res/menu/nav_bottom_activity_main.xml" value="0.2421875" />
       </map>
     </option>

@@ -11,28 +11,23 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ashwin.embybyashwin.Fragment.Home.Model.MyMedia;
 import com.ashwin.embybyashwin.R;
 import com.ashwin.embybyashwin.emby.GlobalClass;
 
 import java.util.ArrayList;
 
 import mediabrowser.apiinteraction.android.AndroidApiClient;
-import mediabrowser.model.drawing.ImageFormat;
 import mediabrowser.model.dto.BaseItemDto;
 import mediabrowser.model.dto.ImageOptions;
-import mediabrowser.model.entities.ImageType;
-import mediabrowser.model.entities.MediaType;
-import mediabrowser.model.querying.ItemFilter;
 
-public class LandscapeViewAdapter extends RecyclerView.Adapter<LandscapeViewAdapter.ViewHolder>{
+public class PortraitViewAdapter extends RecyclerView.Adapter<PortraitViewAdapter.ViewHolder>{
     private final AndroidApiClient apiClient;
-    private String TAG = LandscapeViewAdapter.class.getSimpleName();
+    private String TAG = PortraitViewAdapter.class.getSimpleName();
     ArrayList<BaseItemDto> mediaList;
     ViewOptions viewOptions;
     ImageOptions options;
 
-    public LandscapeViewAdapter(ArrayList<BaseItemDto> medialist, ViewOptions viewoptions){
+    public PortraitViewAdapter(ArrayList<BaseItemDto> medialist, ViewOptions viewoptions){
         mediaList = medialist;
         viewOptions = viewoptions;
         apiClient = GlobalClass.getInstance().getApiClient();
@@ -49,14 +44,14 @@ public class LandscapeViewAdapter extends RecyclerView.Adapter<LandscapeViewAdap
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View view = inflater.inflate(R.layout.list_item_landscape_view, parent, false);
+        View view = inflater.inflate(R.layout.list_item_portrait_view, parent, false);
 
-        LandscapeViewAdapter.ViewHolder viewHolder = new LandscapeViewAdapter.ViewHolder(view);
+        PortraitViewAdapter.ViewHolder viewHolder = new PortraitViewAdapter.ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(LandscapeViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(PortraitViewAdapter.ViewHolder holder, int position) {
 
         BaseItemDto item = mediaList.get(position);
 
@@ -107,9 +102,9 @@ public class LandscapeViewAdapter extends RecyclerView.Adapter<LandscapeViewAdap
         public ViewHolder(View itemView) {
             super(itemView);
 
-            imgPrimary = (ImageView) itemView.findViewById(R.id.img_list_item_landscape_view);
-            txtName = (TextView) itemView.findViewById(R.id.txt_list_item_landscape_view_main);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.pb_list_item_landscape_view);
+            imgPrimary = (ImageView) itemView.findViewById(R.id.img_list_item_portrait_view);
+            txtName = (TextView) itemView.findViewById(R.id.txt_list_item_portrait_view_main);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.pb_list_item_portrait_view);
         }
     }
 }

@@ -7,12 +7,19 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/main_margin"
+        android:paddingLeft="@dimen/main_margin"
+        android:paddingRight="@dimen/main_margin"
+        android:clipToPadding="false"
+        android:clipChildren="false">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Continue Watching"
+            android:textSize="@dimen/H1"
+            android:textStyle="bold"
             android:textColor="@color/colorWhite"
             android:id="@+id/lbl_continue_watching"/>
 

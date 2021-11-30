@@ -8,22 +8,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
-        android:id="@+id/card_list_item_landscape_view">
+        android:id="@+id/card_list_item_portrait_view">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/img_list_item_landscape_view"
-                android:layout_width="176dp"
-                android:layout_height="99dp"></ImageView>
+                android:id="@+id/img_list_item_portrait_view"
+                android:layout_width="120dp"
+                android:layout_height="180dp"></ImageView>
 
             <ProgressBar
-                android:id="@+id/pb_list_item_landscape_view"
+                android:id="@+id/pb_list_item_portrait_view"
                 style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
-                android:layout_width="176dp"
+                android:layout_width="120dp"
                 android:layout_height="3dp"
-                android:layout_alignBottom="@+id/img_list_item_landscape_view"
+                android:layout_alignBottom="@+id/img_list_item_portrait_view"
                 android:layout_centerHorizontal="true"
                 android:max="100"
                 android:progress="75"
@@ -33,11 +33,13 @@
 
     </androidx.cardview.widget.CardView>
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:text="Sample"
-        android:id="@+id/txt_list_item_landscape_view_main"
-        android:layout_below="@id/card_list_item_landscape_view"
+        android:text="Samplxxxxx  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxe"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:id="@+id/txt_list_item_portrait_view_main"
+        android:layout_below="@id/card_list_item_portrait_view"
         android:textAlignment="center"
         android:visibility="gone"/>
 </RelativeLayout>

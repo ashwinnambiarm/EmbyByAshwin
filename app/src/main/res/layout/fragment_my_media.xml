@@ -9,12 +9,18 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/main_margin"
+        android:paddingRight="@dimen/main_margin"
+        android:clipToPadding="false"
+        android:clipChildren="false">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="My Media"
+            android:textSize="@dimen/H1"
+            android:textStyle="bold"
             android:textColor="@color/colorWhite"
             android:id="@+id/lbl_my_media"/>
 

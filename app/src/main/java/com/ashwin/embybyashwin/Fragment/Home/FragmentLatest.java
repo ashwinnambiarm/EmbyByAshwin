@@ -2,11 +2,13 @@ package com.ashwin.embybyashwin.Fragment.Home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import android.app.Fragment;
 
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ashwin.embybyashwin.ActivityDetails;
 import com.ashwin.embybyashwin.ActivityLogin;
 import com.ashwin.embybyashwin.Fragment.Home.Adapter.LatestAdapter;
+import com.ashwin.embybyashwin.Fragment.Home.Adapter.PortraitViewAdapter;
+import com.ashwin.embybyashwin.Fragment.Home.Adapter.ViewOptions;
 import com.ashwin.embybyashwin.Fragment.Home.Model.MyMedia;
 import com.ashwin.embybyashwin.Fragment.Login.FragmentServers;
 import com.ashwin.embybyashwin.R;
@@ -34,7 +38,7 @@ import mediabrowser.model.dto.BaseItemDto;
 public class FragmentLatest extends Fragment {
 
     private static final String TAG = FragmentLatest.class.getSimpleName();
-    private ArrayList<ArrayList<MyMedia>> latestList;
+    private ArrayList<ArrayList<BaseItemDto>> latestList;
 
     FragmentLatest.FragmentLatestOnClickListener listener;
 
@@ -60,13 +64,22 @@ public class FragmentLatest extends Fragment {
             latestList = new ArrayList<>();
         }
 
-        for (ArrayList<MyMedia> libItem: latestList){
+        for (ArrayList<BaseItemDto> libItem: latestList){
             if (libItem.size()>0){
                 TextView textView = new TextView(this.getContext());
                 RecyclerView child = new RecyclerView(this.getContext());
 
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                layoutParams.setMargins(0, getResources().getDimensionPixelSize(R.dimen.main_margin), 0, 0);
+
                 textView.setText("Latest " + libItem.get(0).getName());
                 textView.setTag(libItem.get(0).getId());
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimensionPixelSize(R.dimen.H1));
+                textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+                textView.setTextColor(getResources().getColor(R.color.colorWhite));
+
 
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -76,10 +89,11 @@ public class FragmentLatest extends Fragment {
                     }
                 });
 
-                root.addView(textView);
+                root.addView(textView, layoutParams);
                 root.addView(child);
-
-                LatestAdapter adapter = new LatestAdapter(libItem);
+                ViewOptions options = new ViewOptions();
+                options.setMaxWidth(240);
+                PortraitViewAdapter adapter = new PortraitViewAdapter(libItem, options);
                 child.setAdapter(adapter);
                 child.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false));
             }
