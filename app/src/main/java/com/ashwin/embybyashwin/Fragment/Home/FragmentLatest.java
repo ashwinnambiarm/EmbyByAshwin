@@ -65,7 +65,7 @@ public class FragmentLatest extends Fragment {
                 TextView textView = new TextView(this.getContext());
                 RecyclerView child = new RecyclerView(this.getContext());
 
-                textView.setText(libItem.get(0).getName());
+                textView.setText("Latest " + libItem.get(0).getName());
                 textView.setTag(libItem.get(0).getId());
 
                 textView.setOnClickListener(new View.OnClickListener() {
