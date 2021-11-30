@@ -18,8 +18,10 @@ import com.ashwin.embybyashwin.R;
 
 import java.util.ArrayList;
 
+import mediabrowser.model.dto.BaseItemDto;
+
 public class FragmentContinueWatching extends Fragment {
-    private ArrayList<MyMedia> mediaList;
+    private ArrayList<BaseItemDto> mediaList;
     private String TAG = FragmentContinueWatching.class.getSimpleName();
 
     public FragmentContinueWatching() {
@@ -56,7 +58,7 @@ public class FragmentContinueWatching extends Fragment {
 
     }
 
-    public void setMediaList(ArrayList<MyMedia> myList) {
+    public void setMediaList(ArrayList<BaseItemDto> myList) {
         mediaList = myList;
     }
 }

@@ -27,11 +27,11 @@ import mediabrowser.model.querying.ItemFilter;
 public class LandscapeViewAdapter extends RecyclerView.Adapter<LandscapeViewAdapter.ViewHolder>{
     private final AndroidApiClient apiClient;
     private String TAG = LandscapeViewAdapter.class.getSimpleName();
-    ArrayList<MyMedia> mediaList;
+    ArrayList<BaseItemDto> mediaList;
     ViewOptions viewOptions;
     ImageOptions options;
 
-    public LandscapeViewAdapter(ArrayList<MyMedia> medialist, ViewOptions viewoptions){
+    public LandscapeViewAdapter(ArrayList<BaseItemDto> medialist, ViewOptions viewoptions){
         mediaList = medialist;
         viewOptions = viewoptions;
         apiClient = GlobalClass.getInstance().getApiClient();
@@ -57,21 +57,19 @@ public class LandscapeViewAdapter extends RecyclerView.Adapter<LandscapeViewAdap
     @Override
     public void onBindViewHolder(LandscapeViewAdapter.ViewHolder holder, int position) {
 
-        MyMedia myMedia = mediaList.get(position);
+        BaseItemDto item = mediaList.get(position);
 
         ImageView imgPrimary = holder.imgPrimary;
         ProgressBar progressBar = holder.progressBar;
 
-
-        BaseItemDto baseItemDto = myMedia.getItemDetials();
-        Log.e(TAG, baseItemDto.getName());
+        Log.e(TAG, item.getName());
 
         try {
 
-            String itemId = baseItemDto.getId();
+            String itemId = item.getId();
 
-            if (baseItemDto.getType().equals("Episode")){
-                itemId = baseItemDto.getSeriesId();
+            if (item.getType().equals("Episode")){
+                itemId = item.getSeriesId();
             }
 
             String url_img = apiClient.GetImageUrl(itemId, options);
@@ -81,9 +79,8 @@ public class LandscapeViewAdapter extends RecyclerView.Adapter<LandscapeViewAdap
             Log.e(TAG, e.getLocalizedMessage());
         }
 
-
-        if (viewOptions.isShowProgressBar() && myMedia.getItemDetials().getCanResume()){
-            Integer i = (int) (myMedia.getItemDetials().getResumePositionTicks() * 100 /  myMedia.getItemDetials().getRunTimeTicks());
+        if (viewOptions.isShowProgressBar() && item.getCanResume()){
+            Integer i = (int) (item.getResumePositionTicks() * 100 /  item.getRunTimeTicks());
             progressBar.setProgress(i);
         }
     }

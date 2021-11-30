@@ -178,26 +178,19 @@ public class FragmentHome extends Fragment {
             @Override
             public void onResponse(ItemsResult response) {
 
+                ArrayList<BaseItemDto> myList = new ArrayList<>();
 
-
-                ArrayList<MyMedia> myList = new ArrayList<MyMedia>();
-
-//                Log.e(TAG, "loadContinueWatching Count->"  + response.getItems().length);
                 for (BaseItemDto item: response.getItems()) {
                     Log.e(TAG, "loadContinueWatching ->"  + item.getName());
-                    MyMedia myMedia = new MyMedia();
-                    myMedia.setItemDetials(item);
-//                    myMedia.setName(item.getName());
-//                    myMedia.setId(item.getId());
-//                    myMedia.setThumbanilUrl(apiClient.GetImageUrl(item,options));
-                    myList.add(myMedia);
+                    myList.add(item);
                 }
 
                 Log.e(TAG, "loadContinueWatching myList Count->"  + myList.size());
-
-                FragmentContinueWatching fragmentContinueWatching = FragmentContinueWatching.newInstance();
-                fragmentContinueWatching.setMediaList(myList);
-                loadFragment(fragmentContinueWatching, R.id.fl_home_section_3);
+                if (myList.size()>0) {
+                    FragmentContinueWatching fragmentContinueWatching = FragmentContinueWatching.newInstance();
+                    fragmentContinueWatching.setMediaList(myList);
+                    loadFragment(fragmentContinueWatching, R.id.fl_home_section_3);
+                }
             }
         });
     }
