@@ -65,11 +65,11 @@ public class FragmentHome extends Fragment {
     public void onResume() {
         super.onResume();
         Log.e(TAG, "onResume");
-        LoadMyMedia();
-        loadContinueWatching();
+        LoadMyMedia(R.id.fl_home_section_1, R.id.fl_home_section_3);
+        loadContinueWatching(R.id.fl_home_section_2);
     }
 
-    private void LoadMyMedia(){
+    private void LoadMyMedia(Integer libraryLayoutID, Integer latestLayoutID){
         FragmentMyMedia fragmentMyMedia = new FragmentMyMedia();
 
         ArrayList<BaseItemDto> myList = new ArrayList<>();
@@ -83,17 +83,17 @@ public class FragmentHome extends Fragment {
                     myList.add(item);
                 }
 
-                LoadLatest(myList);
+                LoadLatest(myList, latestLayoutID);
 
                 fragmentMyMedia.setMyMediaList(myList);
 
-                loadFragment(fragmentMyMedia, R.id.fl_home_section_1);
+                loadFragment(fragmentMyMedia, libraryLayoutID);
             }
         });
     }
 
 
-    private void LoadLatest(ArrayList<BaseItemDto> parentIds){
+    private void LoadLatest(ArrayList<BaseItemDto> parentIds, Integer latestLayoutID){
         // TODO: 12/1/2021  Need to Latest Title
 
         FragmentLatest fragmentLatest = new FragmentLatest();
@@ -132,7 +132,7 @@ public class FragmentHome extends Fragment {
                     if (finalCount == (parentIds.size()-1)){
                         Log.e(TAG, "LoadLatest Last Item->" + finalCount);
                         fragmentLatest.setLatestList(myLatestList);
-                        loadFragment(fragmentLatest, R.id.fl_home_section_2);
+                        loadFragment(fragmentLatest, latestLayoutID);
                     }
                 }
             });
@@ -140,7 +140,7 @@ public class FragmentHome extends Fragment {
 
     }
 
-    private void loadContinueWatching(){
+    private void loadContinueWatching(Integer LayoutID){
         ItemQuery query = new ItemQuery();
         query.setUserId(apiClient.getCurrentUserId());
         query.setLimit(10);
@@ -162,7 +162,7 @@ public class FragmentHome extends Fragment {
                 if (myList.size()>0) {
                     FragmentContinueWatching fragmentContinueWatching = FragmentContinueWatching.newInstance();
                     fragmentContinueWatching.setMediaList(myList);
-                    loadFragment(fragmentContinueWatching, R.id.fl_home_section_3);
+                    loadFragment(fragmentContinueWatching, LayoutID);
                 }
             }
         });
