@@ -52,7 +52,7 @@ public class FragmentContinueWatching extends Fragment {
 
         ViewOptions viewOptions = new ViewOptions();
         viewOptions.setShowProgressBar(true);
-        viewOptions.setImageType(ImageType.Backdrop);
+        viewOptions.setImageType(ImageType.Thumb);
         LandscapeViewAdapter adapter = new LandscapeViewAdapter(mediaList, viewOptions);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false));
