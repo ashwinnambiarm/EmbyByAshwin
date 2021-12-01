@@ -39,8 +39,10 @@ public class FragmentLatest extends Fragment {
 
     private static final String TAG = FragmentLatest.class.getSimpleName();
     private ArrayList<ArrayList<BaseItemDto>> latestList;
+    private ArrayList<BaseItemDto> parentList;
 
     FragmentLatest.FragmentLatestOnClickListener listener;
+
 
     public interface FragmentLatestOnClickListener{
         void OnClickFragmentLatestViewAll(String itemID);
@@ -64,22 +66,26 @@ public class FragmentLatest extends Fragment {
             latestList = new ArrayList<>();
         }
 
-        for (ArrayList<BaseItemDto> libItem: latestList){
-            if (libItem.size()>0){
+        if (latestList.size() == parentList.size()){
+            for (Integer count = 0; count < latestList.size() ; count++) {
+                ArrayList<BaseItemDto> latestItem = latestList.get(count);
+                BaseItemDto parentItem = parentList.get(count);
+
+                Log.e(TAG, parentItem.getName());
+
                 TextView textView = new TextView(this.getContext());
                 RecyclerView child = new RecyclerView(this.getContext());
 
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
                 layoutParams.setMargins(0, getResources().getDimensionPixelSize(R.dimen.main_margin), 0, 0);
 
-                textView.setText("Latest " + libItem.get(0).getName());
-                textView.setTag(libItem.get(0).getId());
+                textView.setText("Latest " + parentItem.getName());
+                textView.setTag(parentItem.getId());
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimensionPixelSize(R.dimen.H1));
                 textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
                 textView.setTextColor(getResources().getColor(R.color.colorWhite));
-
 
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -93,9 +99,10 @@ public class FragmentLatest extends Fragment {
                 root.addView(child);
                 ViewOptions options = new ViewOptions();
                 options.setMaxWidth(240);
-                PortraitViewAdapter adapter = new PortraitViewAdapter(libItem, options);
+                PortraitViewAdapter adapter = new PortraitViewAdapter(latestItem, options);
                 child.setAdapter(adapter);
                 child.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false));
+
             }
         }
 
@@ -121,5 +128,8 @@ public class FragmentLatest extends Fragment {
 
     public void setLatestList (ArrayList mediaList){
         latestList = mediaList;
+    }
+    public void setParentList(ArrayList<BaseItemDto> parentlist) {
+        parentList = parentlist;
     }
 }

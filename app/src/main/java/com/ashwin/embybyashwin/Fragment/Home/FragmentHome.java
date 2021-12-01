@@ -132,6 +132,7 @@ public class FragmentHome extends Fragment {
                     if (finalCount == (parentIds.size()-1)){
                         Log.e(TAG, "LoadLatest Last Item->" + finalCount);
                         fragmentLatest.setLatestList(myLatestList);
+                        fragmentLatest.setParentList(parentIds);
                         loadFragment(fragmentLatest, latestLayoutID);
                     }
                 }
