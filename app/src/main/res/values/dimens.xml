@@ -1,6 +1,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="main_margin">16dp</dimen>
+    <dimen name="main_margin_1">10dp</dimen>
     <dimen name="H1">20sp</dimen>
     <dimen name="card_corner_radius">5dp</dimen>
 </resources>

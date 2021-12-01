@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ashwin.embybyashwin.Fragment.Home.Adapter.MyMediaAdapter;
+import com.ashwin.embybyashwin.Fragment.Home.Adapter.PortraitViewAdapter;
+import com.ashwin.embybyashwin.Fragment.Home.Adapter.ViewOptions;
 import com.ashwin.embybyashwin.Fragment.Home.Model.MyMedia;
 import com.ashwin.embybyashwin.R;
 import com.ashwin.embybyashwin.emby.GlobalClass;
@@ -102,27 +104,21 @@ public class FragmentView extends Fragment {
         apiClient.GetItemsAsync(query_2, new Response<ItemsResult>() {
             @Override
             public void onResponse(ItemsResult response) {
-                ImageOptions options = new ImageOptions();
-                options.setImageType(ImageType.Primary);
-                options.setFormat(ImageFormat.Png);
-                options.setMaxWidth(240);
 
-                ArrayList<MyMedia> myMediaList = new ArrayList<MyMedia>();
+                ArrayList<BaseItemDto> myMediaList = new ArrayList<BaseItemDto>();
                 for (BaseItemDto item: response.getItems()) {
-                    MyMedia myMedia = new MyMedia();
-                    myMedia.setItemDetials(item);
-                    myMedia.setName(item.getName());
-                    myMedia.setId(item.getId());
-                    myMedia.setThumbanilUrl(apiClient.GetImageUrl(item,options));
-                    myMediaList.add(myMedia);
+                    myMediaList.add(item);
                 }
-                updatedGridView(myMediaList);
+                updateGridView(myMediaList);
             }
         });
     }
 
-    private void updatedGridView(ArrayList<MyMedia> myList){
-        MyMediaAdapter adapter = new MyMediaAdapter(myList);
+    private void updateGridView(ArrayList<BaseItemDto> myList){
+        ViewOptions options = new ViewOptions();
+        options.setMaxWidth(240);
+
+        PortraitViewAdapter adapter = new PortraitViewAdapter(myList,options);
         rvMyMedia.setAdapter(adapter);
         rvMyMedia.setLayoutManager(new GridLayoutManager(getContext(),3));
     }

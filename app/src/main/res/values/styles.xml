@@ -9,11 +9,11 @@
     </style>
 
     <style name="FullscreenNoActionBarStyle" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:background">@color/black_overlay</item>
+        <item name="android:background">@color/colorBackground</item>
     </style>
 
     <style name="LaunchTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@color/black_overlay</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
     </style>
 
     <style name="BottomNavigation">
