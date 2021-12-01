@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.Home.FragmentMyMedia"
-    android:background="@color/colorBlack">
+    tools:context=".Fragment.Home.FragmentMyMedia">
 
     <RelativeLayout
         android:layout_width="match_parent"
