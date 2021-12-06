@@ -11,19 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ashwin.embybyashwin.Fragment.Home.Model.MyMedia;
 import com.ashwin.embybyashwin.R;
 import com.ashwin.embybyashwin.emby.GlobalClass;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import mediabrowser.apiinteraction.Response;
 import mediabrowser.apiinteraction.android.AndroidApiClient;
-import mediabrowser.model.drawing.ImageFormat;
 import mediabrowser.model.dto.BaseItemDto;
-import mediabrowser.model.dto.ImageOptions;
-import mediabrowser.model.entities.ImageType;
 import mediabrowser.model.entities.SortOrder;
 import mediabrowser.model.querying.ItemFilter;
 import mediabrowser.model.querying.ItemQuery;
@@ -31,7 +26,7 @@ import mediabrowser.model.querying.ItemsResult;
 
 
 public class FragmentHome extends Fragment {
-
+    private static FragmentHome INSTANCE = null;
 
     private AndroidApiClient apiClient;
     private String TAG = FragmentHome.class.getSimpleName();
@@ -41,8 +36,10 @@ public class FragmentHome extends Fragment {
     }
 
     public static FragmentHome newInstance() {
-        FragmentHome fragment = new FragmentHome();
-        return fragment;
+        if (INSTANCE == null) {
+            INSTANCE = new FragmentHome();
+        }
+        return(INSTANCE);
     }
 
     @Override
