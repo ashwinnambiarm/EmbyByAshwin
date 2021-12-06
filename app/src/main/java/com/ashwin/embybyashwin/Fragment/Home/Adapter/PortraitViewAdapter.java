@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,7 +47,20 @@ public class PortraitViewAdapter extends RecyclerView.Adapter<PortraitViewAdapte
 
         View view = inflater.inflate(R.layout.list_item_portrait_view, parent, false);
 
+        Double viewItem = Double.valueOf(context.getResources().getString(viewOptions.getMediaColumnsRes()));
+
+        Double _itemWidth =(parent.getMeasuredWidth()/ viewItem);
+        Double _itemHeight = _itemWidth  * 1.45;
+        Integer itemWidth = _itemWidth.intValue();
+        Integer itemHeight = _itemHeight.intValue();
+        Integer margin = context.getResources().getDimensionPixelSize(R.dimen.media_item_margin);
+        Log.e(TAG, "itemWidth->" + itemWidth);
+
+        view.setLayoutParams(new ViewGroup.LayoutParams(itemWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
         PortraitViewAdapter.ViewHolder viewHolder = new PortraitViewAdapter.ViewHolder(view);
+
+        viewHolder.imgPrimary.setLayoutParams(new RelativeLayout.LayoutParams(itemWidth - (margin*2), itemHeight - (margin*2)));
+
         return viewHolder;
     }
 

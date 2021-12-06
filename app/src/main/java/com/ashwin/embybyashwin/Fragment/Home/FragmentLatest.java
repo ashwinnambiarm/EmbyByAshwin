@@ -99,6 +99,7 @@ public class FragmentLatest extends Fragment {
                 root.addView(child);
                 ViewOptions options = new ViewOptions();
                 options.setMaxWidth(240);
+                options.setMediaColumnsRes(R.string.media_columns);
                 PortraitViewAdapter adapter = new PortraitViewAdapter(latestItem, options);
                 child.setAdapter(adapter);
                 child.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false));

@@ -1,5 +1,6 @@
 package com.ashwin.embybyashwin.Fragment.Details;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import android.app.Fragment;
@@ -12,10 +13,8 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ashwin.embybyashwin.Fragment.Home.Adapter.MyMediaAdapter;
 import com.ashwin.embybyashwin.Fragment.Home.Adapter.PortraitViewAdapter;
 import com.ashwin.embybyashwin.Fragment.Home.Adapter.ViewOptions;
-import com.ashwin.embybyashwin.Fragment.Home.Model.MyMedia;
 import com.ashwin.embybyashwin.R;
 import com.ashwin.embybyashwin.emby.GlobalClass;
 
@@ -23,17 +22,14 @@ import java.util.ArrayList;
 
 import mediabrowser.apiinteraction.Response;
 import mediabrowser.apiinteraction.android.AndroidApiClient;
-import mediabrowser.model.drawing.ImageFormat;
 import mediabrowser.model.dto.BaseItemDto;
-import mediabrowser.model.dto.ImageOptions;
-import mediabrowser.model.entities.ImageType;
 import mediabrowser.model.entities.SortOrder;
 import mediabrowser.model.querying.ItemQuery;
 import mediabrowser.model.querying.ItemsResult;
 
 
 public class FragmentView extends Fragment {
-    private ArrayList<MyMedia> myMediaList;
+    private ArrayList<BaseItemDto> myMediaList;
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_VIEW = "VIEW";
@@ -44,6 +40,7 @@ public class FragmentView extends Fragment {
     private AndroidApiClient apiClient;
     private RecyclerView rvMyMedia;
     private String TAG = FragmentView.class.getSimpleName();
+    private Integer spanCount = 3;
 
     public FragmentView() {
         // Required empty public constructor
@@ -66,7 +63,12 @@ public class FragmentView extends Fragment {
             m_PARENT_ID = getArguments().getString(ARG_PARENT_ID);
         }
 
+        spanCount = Integer.valueOf(getResources().getString(R.string.media_grid_columns));
         apiClient = GlobalClass.getInstance().getApiClient();
+
+        if (myMediaList == null){
+            myMediaList = new ArrayList<BaseItemDto>();
+        }
 
         LoadGridView(m_PARENT_ID);
     }
@@ -79,7 +81,7 @@ public class FragmentView extends Fragment {
         rvMyMedia = (RecyclerView) v.findViewById(R.id.rv_activity_details_main);
 
         if (myMediaList == null){
-            myMediaList = new ArrayList<MyMedia>();
+            myMediaList = new ArrayList<BaseItemDto>();
         }
         return v;
     }
@@ -88,7 +90,15 @@ public class FragmentView extends Fragment {
     public void onResume() {
         super.onResume();
         Log.e(TAG, "onResume");
-        LoadGridView(m_PARENT_ID);
+        spanCount = Integer.valueOf(getResources().getString(R.string.media_grid_columns));
+        updateGridView(myMediaList);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        spanCount = Integer.valueOf(getResources().getString(R.string.media_grid_columns));
+        updateGridView(myMediaList);
     }
 
     private void LoadGridView(String parentID) {
@@ -105,7 +115,6 @@ public class FragmentView extends Fragment {
             @Override
             public void onResponse(ItemsResult response) {
 
-                ArrayList<BaseItemDto> myMediaList = new ArrayList<BaseItemDto>();
                 for (BaseItemDto item: response.getItems()) {
                     myMediaList.add(item);
                 }
@@ -117,9 +126,11 @@ public class FragmentView extends Fragment {
     private void updateGridView(ArrayList<BaseItemDto> myList){
         ViewOptions options = new ViewOptions();
         options.setMaxWidth(240);
+        options.setMediaColumnsRes(R.string.media_grid_columns);
 
         PortraitViewAdapter adapter = new PortraitViewAdapter(myList,options);
         rvMyMedia.setAdapter(adapter);
-        rvMyMedia.setLayoutManager(new GridLayoutManager(getContext(),3));
+        rvMyMedia.setLayoutManager(new GridLayoutManager(getContext(), spanCount));
+
     }
 }

@@ -9,6 +9,8 @@ public class ViewOptions {
     private ImageType imageType = ImageType.Primary;
     private Integer maxWidth = 280;
 
+    private int mediaColumns = 1;
+
     public boolean isShowProgressBar() {
         return showProgressBar;
     }
@@ -39,5 +41,13 @@ public class ViewOptions {
 
     public void setMaxWidth(Integer maxWidth) {
         this.maxWidth = maxWidth;
+    }
+
+    public Integer getMediaColumnsRes() {
+        return mediaColumns;
+    }
+
+    public void setMediaColumnsRes(Integer mediaColumns) {
+        this.mediaColumns = mediaColumns;
     }
 }
