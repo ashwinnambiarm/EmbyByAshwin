@@ -1,3 +1,5 @@
 <resources>
-        <dimen name="fab_margin">48dp</dimen>
-    </resources>
+    <dimen name="fab_margin">48dp</dimen>
+    <string name="media_columns">4.5</string>
+    <string name="media_grid_columns">5</string>
+</resources>

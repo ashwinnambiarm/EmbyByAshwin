@@ -4,4 +4,7 @@
     <dimen name="main_margin_1">10dp</dimen>
     <dimen name="H1">20sp</dimen>
     <dimen name="card_corner_radius">5dp</dimen>
+    <dimen name="media_item_margin">2dp</dimen>
+    <string name="media_columns">2.5</string>
+    <string name="media_grid_columns">3</string>
 </resources>

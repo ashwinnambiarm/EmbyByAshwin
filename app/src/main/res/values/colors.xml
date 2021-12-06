@@ -6,5 +6,6 @@
     <color name="colorBlack">#000</color>
     <color name="colorWhite">#fff</color>
     <color name="colorBackground">#242125</color>
+    <color name="colorCardBackground">#312e32</color>
     <color name="black_overlay">#BF000000</color>
 </resources>
